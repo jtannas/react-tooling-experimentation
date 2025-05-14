@@ -27,3 +27,12 @@ Repo for testing out different React tools
 - `fetch` automatic token renewal
   - `ky` as a possible simplification; https://github.com/sindresorhus/ky
 - Zustand as primary local data store; https://zustand.docs.pmnd.rs/getting-started/introduction
+- Tailwind v4 https://tailwindcss.com/blog/tailwindcss-v4
+  - container queries
+  - transitions
+  - transforms
+- React Compiler; https://react.dev/learn/react-compiler
+- Recharts; https://recharts.org/en-US
+- React Three Fiber; https://github.com/pmndrs/react-three-fiber
+- React Loading Skeletong; https://github.com/dvtng/react-loading-skeleton
+- Customizable Dashboard using react-grid-layout; https://github.com/react-grid-layout/react-grid-layout#demos
