@@ -3,6 +3,7 @@ Repo for testing out different React tools
 
 # To Experiment With
 
+- Mise; https://mise.jdx.dev/
 - Tanstack Router; https://tanstack.com/router/latest
   - Prefetching
   - Auth
