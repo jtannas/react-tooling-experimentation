@@ -24,5 +24,6 @@ Repo for testing out different React tools
 - Supabase; https://supabase.com/
 - React Joyride for guided tours; https://react-joyride.com/
 - Bun unit testing; https://bun.sh/
-- `fetch` token renewal
+- `fetch` automatic token renewal
   - `ky` as a possible simplification; https://github.com/sindresorhus/ky
+- Zustand as primary local data store; https://zustand.docs.pmnd.rs/getting-started/introduction
