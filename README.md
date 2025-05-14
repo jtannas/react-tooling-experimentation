@@ -39,3 +39,4 @@ Repo for testing out different React tools
 - React Loading Skeletong; https://github.com/dvtng/react-loading-skeleton
 - Customizable Dashboard using react-grid-layout; https://github.com/react-grid-layout/react-grid-layout#demos
 - React Query Builder: https://react-querybuilder.js.org/
+- KBar command palette; https://kbar.vercel.app/
