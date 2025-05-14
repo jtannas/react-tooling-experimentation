@@ -15,7 +15,9 @@ Repo for testing out different React tools
 - Tanstack Query advanced features; https://tanstack.com/query/latest
   - Infinite Queries
   - Parsing query data into local class
-- Clerk organization features; https://clerk.com/docs/organizations/overview
+- Clerk advanced features:
+  - organization features; https://clerk.com/docs/organizations/overview
+  - subscriptions; https://clerk.com/billing
 - Biome v2.0 (currently beta); https://biomejs.dev/blog/biome-v2-0-beta/
 - ShadCN/UI; https://ui.shadcn.com/
 - Storybook Component Testing; https://storybook.js.org/
@@ -36,3 +38,4 @@ Repo for testing out different React tools
 - React Three Fiber; https://github.com/pmndrs/react-three-fiber
 - React Loading Skeletong; https://github.com/dvtng/react-loading-skeleton
 - Customizable Dashboard using react-grid-layout; https://github.com/react-grid-layout/react-grid-layout#demos
+- React Query Builder: https://react-querybuilder.js.org/
