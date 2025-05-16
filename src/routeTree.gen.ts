@@ -15,7 +15,9 @@ import { Route as SampleImport } from './routes/sample'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
+import { Route as DynamicIndexImport } from './routes/dynamic/index'
 import { Route as SettingsThemeImport } from './routes/settings/theme'
+import { Route as DynamicIdImport } from './routes/dynamic/$id'
 
 // Create/Update Routes
 
@@ -43,9 +45,21 @@ const SettingsIndexRoute = SettingsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DynamicIndexRoute = DynamicIndexImport.update({
+  id: '/dynamic/',
+  path: '/dynamic/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const SettingsThemeRoute = SettingsThemeImport.update({
   id: '/settings/theme',
   path: '/settings/theme',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DynamicIdRoute = DynamicIdImport.update({
+  id: '/dynamic/$id',
+  path: '/dynamic/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,11 +88,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SampleImport
       parentRoute: typeof rootRoute
     }
+    '/dynamic/$id': {
+      id: '/dynamic/$id'
+      path: '/dynamic/$id'
+      fullPath: '/dynamic/$id'
+      preLoaderRoute: typeof DynamicIdImport
+      parentRoute: typeof rootRoute
+    }
     '/settings/theme': {
       id: '/settings/theme'
       path: '/settings/theme'
       fullPath: '/settings/theme'
       preLoaderRoute: typeof SettingsThemeImport
+      parentRoute: typeof rootRoute
+    }
+    '/dynamic/': {
+      id: '/dynamic/'
+      path: '/dynamic'
+      fullPath: '/dynamic'
+      preLoaderRoute: typeof DynamicIndexImport
       parentRoute: typeof rootRoute
     }
     '/settings/': {
@@ -97,7 +125,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
+  '/dynamic/$id': typeof DynamicIdRoute
   '/settings/theme': typeof SettingsThemeRoute
+  '/dynamic': typeof DynamicIndexRoute
   '/settings': typeof SettingsIndexRoute
 }
 
@@ -105,7 +135,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
+  '/dynamic/$id': typeof DynamicIdRoute
   '/settings/theme': typeof SettingsThemeRoute
+  '/dynamic': typeof DynamicIndexRoute
   '/settings': typeof SettingsIndexRoute
 }
 
@@ -114,16 +146,40 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
+  '/dynamic/$id': typeof DynamicIdRoute
   '/settings/theme': typeof SettingsThemeRoute
+  '/dynamic/': typeof DynamicIndexRoute
   '/settings/': typeof SettingsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/sample' | '/settings/theme' | '/settings'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/sample'
+    | '/dynamic/$id'
+    | '/settings/theme'
+    | '/dynamic'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/sample' | '/settings/theme' | '/settings'
-  id: '__root__' | '/' | '/about' | '/sample' | '/settings/theme' | '/settings/'
+  to:
+    | '/'
+    | '/about'
+    | '/sample'
+    | '/dynamic/$id'
+    | '/settings/theme'
+    | '/dynamic'
+    | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/sample'
+    | '/dynamic/$id'
+    | '/settings/theme'
+    | '/dynamic/'
+    | '/settings/'
   fileRoutesById: FileRoutesById
 }
 
@@ -131,7 +187,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   SampleRoute: typeof SampleRoute
+  DynamicIdRoute: typeof DynamicIdRoute
   SettingsThemeRoute: typeof SettingsThemeRoute
+  DynamicIndexRoute: typeof DynamicIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
 }
 
@@ -139,7 +197,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   SampleRoute: SampleRoute,
+  DynamicIdRoute: DynamicIdRoute,
   SettingsThemeRoute: SettingsThemeRoute,
+  DynamicIndexRoute: DynamicIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
 }
 
@@ -156,7 +216,9 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/sample",
+        "/dynamic/$id",
         "/settings/theme",
+        "/dynamic/",
         "/settings/"
       ]
     },
@@ -169,8 +231,14 @@ export const routeTree = rootRoute
     "/sample": {
       "filePath": "sample.tsx"
     },
+    "/dynamic/$id": {
+      "filePath": "dynamic/$id.tsx"
+    },
     "/settings/theme": {
       "filePath": "settings/theme.tsx"
+    },
+    "/dynamic/": {
+      "filePath": "dynamic/index.tsx"
     },
     "/settings/": {
       "filePath": "settings/index.tsx"

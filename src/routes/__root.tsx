@@ -17,6 +17,9 @@ export const Route = createRootRoute({
 				<Link to="/settings" className="[&.active]:font-bold">
 					Settings
 				</Link>
+				<Link to="/dynamic" className="[&.active]:font-bold">
+					Dynamic
+				</Link>
 			</div>
 			<hr />
 			<Outlet />
