@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/sample")({
+export const Route = createFileRoute("/_pathlessGroup/sample")({
 	component: Sample,
 });
 

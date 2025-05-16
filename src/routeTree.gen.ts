@@ -11,32 +11,32 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SampleImport } from './routes/sample'
-import { Route as AboutImport } from './routes/about'
+import { Route as PathlessLayoutImport } from './routes/_pathlessLayout'
 import { Route as DynamicRouteImport } from './routes/dynamic/route'
+import { Route as PathlessGroupRouteImport } from './routes/_pathlessGroup/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as DynamicIndexImport } from './routes/dynamic/index'
 import { Route as SettingsThemeImport } from './routes/settings/theme'
 import { Route as DynamicIdImport } from './routes/dynamic/$id'
+import { Route as PathlessLayoutAboutImport } from './routes/_pathlessLayout.about'
+import { Route as PathlessGroupSampleImport } from './routes/_pathlessGroup/sample'
 
 // Create/Update Routes
 
-const SampleRoute = SampleImport.update({
-  id: '/sample',
-  path: '/sample',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
+const PathlessLayoutRoute = PathlessLayoutImport.update({
+  id: '/_pathlessLayout',
   getParentRoute: () => rootRoute,
 } as any)
 
 const DynamicRouteRoute = DynamicRouteImport.update({
   id: '/dynamic',
   path: '/dynamic',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PathlessGroupRouteRoute = PathlessGroupRouteImport.update({
+  id: '/_pathlessGroup',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -70,6 +70,18 @@ const DynamicIdRoute = DynamicIdImport.update({
   getParentRoute: () => DynamicRouteRoute,
 } as any)
 
+const PathlessLayoutAboutRoute = PathlessLayoutAboutImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => PathlessLayoutRoute,
+} as any)
+
+const PathlessGroupSampleRoute = PathlessGroupSampleImport.update({
+  id: '/sample',
+  path: '/sample',
+  getParentRoute: () => PathlessGroupRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -81,6 +93,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_pathlessGroup': {
+      id: '/_pathlessGroup'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PathlessGroupRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/dynamic': {
       id: '/dynamic'
       path: '/dynamic'
@@ -88,19 +107,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DynamicRouteImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+    '/_pathlessLayout': {
+      id: '/_pathlessLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PathlessLayoutImport
       parentRoute: typeof rootRoute
     }
-    '/sample': {
-      id: '/sample'
+    '/_pathlessGroup/sample': {
+      id: '/_pathlessGroup/sample'
       path: '/sample'
       fullPath: '/sample'
-      preLoaderRoute: typeof SampleImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PathlessGroupSampleImport
+      parentRoute: typeof PathlessGroupRouteImport
+    }
+    '/_pathlessLayout/about': {
+      id: '/_pathlessLayout/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof PathlessLayoutAboutImport
+      parentRoute: typeof PathlessLayoutImport
     }
     '/dynamic/$id': {
       id: '/dynamic/$id'
@@ -135,6 +161,17 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface PathlessGroupRouteRouteChildren {
+  PathlessGroupSampleRoute: typeof PathlessGroupSampleRoute
+}
+
+const PathlessGroupRouteRouteChildren: PathlessGroupRouteRouteChildren = {
+  PathlessGroupSampleRoute: PathlessGroupSampleRoute,
+}
+
+const PathlessGroupRouteRouteWithChildren =
+  PathlessGroupRouteRoute._addFileChildren(PathlessGroupRouteRouteChildren)
+
 interface DynamicRouteRouteChildren {
   DynamicIdRoute: typeof DynamicIdRoute
   DynamicIndexRoute: typeof DynamicIndexRoute
@@ -149,11 +186,24 @@ const DynamicRouteRouteWithChildren = DynamicRouteRoute._addFileChildren(
   DynamicRouteRouteChildren,
 )
 
+interface PathlessLayoutRouteChildren {
+  PathlessLayoutAboutRoute: typeof PathlessLayoutAboutRoute
+}
+
+const PathlessLayoutRouteChildren: PathlessLayoutRouteChildren = {
+  PathlessLayoutAboutRoute: PathlessLayoutAboutRoute,
+}
+
+const PathlessLayoutRouteWithChildren = PathlessLayoutRoute._addFileChildren(
+  PathlessLayoutRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof PathlessLayoutRouteWithChildren
   '/dynamic': typeof DynamicRouteRouteWithChildren
-  '/about': typeof AboutRoute
-  '/sample': typeof SampleRoute
+  '/sample': typeof PathlessGroupSampleRoute
+  '/about': typeof PathlessLayoutAboutRoute
   '/dynamic/$id': typeof DynamicIdRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/dynamic/': typeof DynamicIndexRoute
@@ -162,8 +212,9 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/sample': typeof SampleRoute
+  '': typeof PathlessLayoutRouteWithChildren
+  '/sample': typeof PathlessGroupSampleRoute
+  '/about': typeof PathlessLayoutAboutRoute
   '/dynamic/$id': typeof DynamicIdRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/dynamic': typeof DynamicIndexRoute
@@ -173,9 +224,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_pathlessGroup': typeof PathlessGroupRouteRouteWithChildren
   '/dynamic': typeof DynamicRouteRouteWithChildren
-  '/about': typeof AboutRoute
-  '/sample': typeof SampleRoute
+  '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
+  '/_pathlessGroup/sample': typeof PathlessGroupSampleRoute
+  '/_pathlessLayout/about': typeof PathlessLayoutAboutRoute
   '/dynamic/$id': typeof DynamicIdRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/dynamic/': typeof DynamicIndexRoute
@@ -186,9 +239,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | ''
     | '/dynamic'
-    | '/about'
     | '/sample'
+    | '/about'
     | '/dynamic/$id'
     | '/settings/theme'
     | '/dynamic/'
@@ -196,8 +250,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
+    | ''
     | '/sample'
+    | '/about'
     | '/dynamic/$id'
     | '/settings/theme'
     | '/dynamic'
@@ -205,9 +260,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_pathlessGroup'
     | '/dynamic'
-    | '/about'
-    | '/sample'
+    | '/_pathlessLayout'
+    | '/_pathlessGroup/sample'
+    | '/_pathlessLayout/about'
     | '/dynamic/$id'
     | '/settings/theme'
     | '/dynamic/'
@@ -217,18 +274,18 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PathlessGroupRouteRoute: typeof PathlessGroupRouteRouteWithChildren
   DynamicRouteRoute: typeof DynamicRouteRouteWithChildren
-  AboutRoute: typeof AboutRoute
-  SampleRoute: typeof SampleRoute
+  PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   SettingsThemeRoute: typeof SettingsThemeRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PathlessGroupRouteRoute: PathlessGroupRouteRouteWithChildren,
   DynamicRouteRoute: DynamicRouteRouteWithChildren,
-  AboutRoute: AboutRoute,
-  SampleRoute: SampleRoute,
+  PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   SettingsThemeRoute: SettingsThemeRoute,
   SettingsIndexRoute: SettingsIndexRoute,
 }
@@ -244,15 +301,21 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_pathlessGroup",
         "/dynamic",
-        "/about",
-        "/sample",
+        "/_pathlessLayout",
         "/settings/theme",
         "/settings/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/_pathlessGroup": {
+      "filePath": "_pathlessGroup/route.tsx",
+      "children": [
+        "/_pathlessGroup/sample"
+      ]
     },
     "/dynamic": {
       "filePath": "dynamic/route.tsx",
@@ -261,11 +324,19 @@ export const routeTree = rootRoute
         "/dynamic/"
       ]
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/_pathlessLayout": {
+      "filePath": "_pathlessLayout.tsx",
+      "children": [
+        "/_pathlessLayout/about"
+      ]
     },
-    "/sample": {
-      "filePath": "sample.tsx"
+    "/_pathlessGroup/sample": {
+      "filePath": "_pathlessGroup/sample.tsx",
+      "parent": "/_pathlessGroup"
+    },
+    "/_pathlessLayout/about": {
+      "filePath": "_pathlessLayout.about.tsx",
+      "parent": "/_pathlessLayout"
     },
     "/dynamic/$id": {
       "filePath": "dynamic/$id.tsx",
