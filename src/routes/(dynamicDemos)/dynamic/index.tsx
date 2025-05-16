@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MyComponent } from "./-MyComponent";
 
-export const Route = createFileRoute("/dynamic/")({
+export const Route = createFileRoute("/(dynamicDemos)/dynamic/")({
 	component: RouteComponent,
 });
 
