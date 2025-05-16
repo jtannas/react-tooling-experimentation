@@ -18,6 +18,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as DynamicIndexImport } from './routes/dynamic/index'
 import { Route as SettingsThemeImport } from './routes/settings/theme'
+import { Route as DynamicUnnestImport } from './routes/dynamic_.unnest'
 import { Route as DynamicIdImport } from './routes/dynamic/$id'
 import { Route as PathlessLayoutAboutImport } from './routes/_pathlessLayout.about'
 import { Route as PathlessGroupSampleImport } from './routes/_pathlessGroup/sample'
@@ -61,6 +62,12 @@ const DynamicIndexRoute = DynamicIndexImport.update({
 const SettingsThemeRoute = SettingsThemeImport.update({
   id: '/settings/theme',
   path: '/settings/theme',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DynamicUnnestRoute = DynamicUnnestImport.update({
+  id: '/dynamic_/unnest',
+  path: '/dynamic/unnest',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -135,6 +142,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DynamicIdImport
       parentRoute: typeof DynamicRouteImport
     }
+    '/dynamic_/unnest': {
+      id: '/dynamic_/unnest'
+      path: '/dynamic/unnest'
+      fullPath: '/dynamic/unnest'
+      preLoaderRoute: typeof DynamicUnnestImport
+      parentRoute: typeof rootRoute
+    }
     '/settings/theme': {
       id: '/settings/theme'
       path: '/settings/theme'
@@ -205,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/sample': typeof PathlessGroupSampleRoute
   '/about': typeof PathlessLayoutAboutRoute
   '/dynamic/$id': typeof DynamicIdRoute
+  '/dynamic/unnest': typeof DynamicUnnestRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/dynamic/': typeof DynamicIndexRoute
   '/settings': typeof SettingsIndexRoute
@@ -216,6 +231,7 @@ export interface FileRoutesByTo {
   '/sample': typeof PathlessGroupSampleRoute
   '/about': typeof PathlessLayoutAboutRoute
   '/dynamic/$id': typeof DynamicIdRoute
+  '/dynamic/unnest': typeof DynamicUnnestRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/dynamic': typeof DynamicIndexRoute
   '/settings': typeof SettingsIndexRoute
@@ -230,6 +246,7 @@ export interface FileRoutesById {
   '/_pathlessGroup/sample': typeof PathlessGroupSampleRoute
   '/_pathlessLayout/about': typeof PathlessLayoutAboutRoute
   '/dynamic/$id': typeof DynamicIdRoute
+  '/dynamic_/unnest': typeof DynamicUnnestRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/dynamic/': typeof DynamicIndexRoute
   '/settings/': typeof SettingsIndexRoute
@@ -244,6 +261,7 @@ export interface FileRouteTypes {
     | '/sample'
     | '/about'
     | '/dynamic/$id'
+    | '/dynamic/unnest'
     | '/settings/theme'
     | '/dynamic/'
     | '/settings'
@@ -254,6 +272,7 @@ export interface FileRouteTypes {
     | '/sample'
     | '/about'
     | '/dynamic/$id'
+    | '/dynamic/unnest'
     | '/settings/theme'
     | '/dynamic'
     | '/settings'
@@ -266,6 +285,7 @@ export interface FileRouteTypes {
     | '/_pathlessGroup/sample'
     | '/_pathlessLayout/about'
     | '/dynamic/$id'
+    | '/dynamic_/unnest'
     | '/settings/theme'
     | '/dynamic/'
     | '/settings/'
@@ -277,6 +297,7 @@ export interface RootRouteChildren {
   PathlessGroupRouteRoute: typeof PathlessGroupRouteRouteWithChildren
   DynamicRouteRoute: typeof DynamicRouteRouteWithChildren
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
+  DynamicUnnestRoute: typeof DynamicUnnestRoute
   SettingsThemeRoute: typeof SettingsThemeRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
 }
@@ -286,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   PathlessGroupRouteRoute: PathlessGroupRouteRouteWithChildren,
   DynamicRouteRoute: DynamicRouteRouteWithChildren,
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
+  DynamicUnnestRoute: DynamicUnnestRoute,
   SettingsThemeRoute: SettingsThemeRoute,
   SettingsIndexRoute: SettingsIndexRoute,
 }
@@ -304,6 +326,7 @@ export const routeTree = rootRoute
         "/_pathlessGroup",
         "/dynamic",
         "/_pathlessLayout",
+        "/dynamic_/unnest",
         "/settings/theme",
         "/settings/"
       ]
@@ -341,6 +364,9 @@ export const routeTree = rootRoute
     "/dynamic/$id": {
       "filePath": "dynamic/$id.tsx",
       "parent": "/dynamic"
+    },
+    "/dynamic_/unnest": {
+      "filePath": "dynamic_.unnest.tsx"
     },
     "/settings/theme": {
       "filePath": "settings/theme.tsx"
