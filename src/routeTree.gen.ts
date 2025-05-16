@@ -14,6 +14,8 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as SampleImport } from './routes/sample'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as SettingsIndexImport } from './routes/settings/index'
+import { Route as SettingsThemeImport } from './routes/settings/theme'
 
 // Create/Update Routes
 
@@ -32,6 +34,18 @@ const AboutRoute = AboutImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SettingsIndexRoute = SettingsIndexImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SettingsThemeRoute = SettingsThemeImport.update({
+  id: '/settings/theme',
+  path: '/settings/theme',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +74,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SampleImport
       parentRoute: typeof rootRoute
     }
+    '/settings/theme': {
+      id: '/settings/theme'
+      path: '/settings/theme'
+      fullPath: '/settings/theme'
+      preLoaderRoute: typeof SettingsThemeImport
+      parentRoute: typeof rootRoute
+    }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +97,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
+  '/settings/theme': typeof SettingsThemeRoute
+  '/settings': typeof SettingsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
+  '/settings/theme': typeof SettingsThemeRoute
+  '/settings': typeof SettingsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +114,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
+  '/settings/theme': typeof SettingsThemeRoute
+  '/settings/': typeof SettingsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/sample'
+  fullPaths: '/' | '/about' | '/sample' | '/settings/theme' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/sample'
-  id: '__root__' | '/' | '/about' | '/sample'
+  to: '/' | '/about' | '/sample' | '/settings/theme' | '/settings'
+  id: '__root__' | '/' | '/about' | '/sample' | '/settings/theme' | '/settings/'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +131,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   SampleRoute: typeof SampleRoute
+  SettingsThemeRoute: typeof SettingsThemeRoute
+  SettingsIndexRoute: typeof SettingsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   SampleRoute: SampleRoute,
+  SettingsThemeRoute: SettingsThemeRoute,
+  SettingsIndexRoute: SettingsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +155,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/sample"
+        "/sample",
+        "/settings/theme",
+        "/settings/"
       ]
     },
     "/": {
@@ -128,6 +168,12 @@ export const routeTree = rootRoute
     },
     "/sample": {
       "filePath": "sample.tsx"
+    },
+    "/settings/theme": {
+      "filePath": "settings/theme.tsx"
+    },
+    "/settings/": {
+      "filePath": "settings/index.tsx"
     }
   }
 }
