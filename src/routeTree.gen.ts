@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SampleImport } from './routes/sample'
 import { Route as AboutImport } from './routes/about'
+import { Route as DynamicRouteImport } from './routes/dynamic/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as DynamicIndexImport } from './routes/dynamic/index'
@@ -33,6 +34,12 @@ const AboutRoute = AboutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DynamicRouteRoute = DynamicRouteImport.update({
+  id: '/dynamic',
+  path: '/dynamic',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
@@ -46,9 +53,9 @@ const SettingsIndexRoute = SettingsIndexImport.update({
 } as any)
 
 const DynamicIndexRoute = DynamicIndexImport.update({
-  id: '/dynamic/',
-  path: '/dynamic/',
-  getParentRoute: () => rootRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => DynamicRouteRoute,
 } as any)
 
 const SettingsThemeRoute = SettingsThemeImport.update({
@@ -58,9 +65,9 @@ const SettingsThemeRoute = SettingsThemeImport.update({
 } as any)
 
 const DynamicIdRoute = DynamicIdImport.update({
-  id: '/dynamic/$id',
-  path: '/dynamic/$id',
-  getParentRoute: () => rootRoute,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => DynamicRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -72,6 +79,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/dynamic': {
+      id: '/dynamic'
+      path: '/dynamic'
+      fullPath: '/dynamic'
+      preLoaderRoute: typeof DynamicRouteImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -90,10 +104,10 @@ declare module '@tanstack/react-router' {
     }
     '/dynamic/$id': {
       id: '/dynamic/$id'
-      path: '/dynamic/$id'
+      path: '/$id'
       fullPath: '/dynamic/$id'
       preLoaderRoute: typeof DynamicIdImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof DynamicRouteImport
     }
     '/settings/theme': {
       id: '/settings/theme'
@@ -104,10 +118,10 @@ declare module '@tanstack/react-router' {
     }
     '/dynamic/': {
       id: '/dynamic/'
-      path: '/dynamic'
-      fullPath: '/dynamic'
+      path: '/'
+      fullPath: '/dynamic/'
       preLoaderRoute: typeof DynamicIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof DynamicRouteImport
     }
     '/settings/': {
       id: '/settings/'
@@ -121,13 +135,28 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface DynamicRouteRouteChildren {
+  DynamicIdRoute: typeof DynamicIdRoute
+  DynamicIndexRoute: typeof DynamicIndexRoute
+}
+
+const DynamicRouteRouteChildren: DynamicRouteRouteChildren = {
+  DynamicIdRoute: DynamicIdRoute,
+  DynamicIndexRoute: DynamicIndexRoute,
+}
+
+const DynamicRouteRouteWithChildren = DynamicRouteRoute._addFileChildren(
+  DynamicRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dynamic': typeof DynamicRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
   '/dynamic/$id': typeof DynamicIdRoute
   '/settings/theme': typeof SettingsThemeRoute
-  '/dynamic': typeof DynamicIndexRoute
+  '/dynamic/': typeof DynamicIndexRoute
   '/settings': typeof SettingsIndexRoute
 }
 
@@ -144,6 +173,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/dynamic': typeof DynamicRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/sample': typeof SampleRoute
   '/dynamic/$id': typeof DynamicIdRoute
@@ -156,11 +186,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dynamic'
     | '/about'
     | '/sample'
     | '/dynamic/$id'
     | '/settings/theme'
-    | '/dynamic'
+    | '/dynamic/'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,6 +205,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/dynamic'
     | '/about'
     | '/sample'
     | '/dynamic/$id'
@@ -185,21 +217,19 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DynamicRouteRoute: typeof DynamicRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   SampleRoute: typeof SampleRoute
-  DynamicIdRoute: typeof DynamicIdRoute
   SettingsThemeRoute: typeof SettingsThemeRoute
-  DynamicIndexRoute: typeof DynamicIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DynamicRouteRoute: DynamicRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   SampleRoute: SampleRoute,
-  DynamicIdRoute: DynamicIdRoute,
   SettingsThemeRoute: SettingsThemeRoute,
-  DynamicIndexRoute: DynamicIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
 }
 
@@ -214,16 +244,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/dynamic",
         "/about",
         "/sample",
-        "/dynamic/$id",
         "/settings/theme",
-        "/dynamic/",
         "/settings/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/dynamic": {
+      "filePath": "dynamic/route.tsx",
+      "children": [
+        "/dynamic/$id",
+        "/dynamic/"
+      ]
     },
     "/about": {
       "filePath": "about.tsx"
@@ -232,13 +268,15 @@ export const routeTree = rootRoute
       "filePath": "sample.tsx"
     },
     "/dynamic/$id": {
-      "filePath": "dynamic/$id.tsx"
+      "filePath": "dynamic/$id.tsx",
+      "parent": "/dynamic"
     },
     "/settings/theme": {
       "filePath": "settings/theme.tsx"
     },
     "/dynamic/": {
-      "filePath": "dynamic/index.tsx"
+      "filePath": "dynamic/index.tsx",
+      "parent": "/dynamic"
     },
     "/settings/": {
       "filePath": "settings/index.tsx"
