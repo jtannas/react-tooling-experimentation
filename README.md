@@ -46,8 +46,11 @@ Repo for testing out different React tools
 # Tanstack Router CheatSheet
 
 - Develop while running the dev server and it will handle creating all the `createFileRoute` brouhaha when you create or rename a route file
+- They **highly** recommend file based routing because of all the nastiness that it handles for you.
+  If you want to get a sense of it, take a look inside of `src/routeTree.gen.ts`
 - Routes can either be defined using folders (e.g. `posts/$id/edit.tsx`) or with periods (e.g. `posts.$id.edit.tsx`)
-  I haven't seen a preference in the docs for one or the other so I'm going to default to folders for now.
+  Tanstack Router calls these "Directory Routes" and "Flat Routes". They recommend mixing between the two based on what makes sense for your project.
+  Generally - directory routes for multiple routes and flat routes for individual deeply nested routes.
 - `src/routes`: contains all of the routing files
   - `__root.tsx`: The root layout of the application
   - `index.tsx`: The route matching `/`
