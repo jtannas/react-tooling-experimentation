@@ -42,3 +42,22 @@ Repo for testing out different React tools
 - [ ] Customizable Dashboard using react-grid-layout; https://github.com/react-grid-layout/react-grid-layout#demos
 - [ ] React Query Builder: https://react-querybuilder.js.org/
 - [ ] KBar command palette; https://kbar.vercel.app/
+
+# Tanstack Router CheatSheet
+
+- Develop while running the dev server and it will handle creating all the `createFileRoute` brouhaha when you create or rename a route file
+- Routes can either be defined using folders (e.g. `posts/$id/edit.tsx`) or with periods (e.g. `posts.$id.edit.tsx`)
+  I haven't seen a preference in the docs for one or the other so I'm going to default to folders for now.
+- `src/routes`: contains all of the routing files
+  - `__root.tsx`: The root layout of the application
+  - `index.tsx`: The route matching `/`
+  - `-MyComponent.tsx`: files & folders starting with `-` are excluded from routing
+  - `_MyGroup/`: does not affect the routing path but files inside of this directory will share a common layout
+    - `route.tsx`: defines the common layout for `_MyGroup`
+  - `(MyOtherGroup)/`: does not affect the routing path or layout of components
+  - `MyPostsGroup/`: creates a routing grouping with a shared layout
+    - `route.tsx`: defines the common layout for `MyPostsGroup`
+    - `index.tsx`: The route matching `/MyPostsGroup`
+    - `$id.tsx`: Matches `/MyPostsGroup/1`, `/MyPostsGroup/2`, `/MyPostsGroup/3`, etc...
+  - `MyPostsGroup_.$id.edit.tsx`: Matches `/MyPostsGroup/1/edit` but ignores the common layout for `MyPostsGroup`
+  - `$.tsx`: matches anything not matched otherwise and sticks it into the `_splat` param. Good for 404 pages.

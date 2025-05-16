@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SplatImport } from './routes/$'
 import { Route as PathlessGroupRouteImport } from './routes/_pathlessGroup/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
@@ -33,6 +34,12 @@ const pathlessLayoutDemosImport = createFileRoute('/(pathlessLayoutDemos)')()
 
 const pathlessLayoutDemosRoute = pathlessLayoutDemosImport.update({
   id: '/(pathlessLayoutDemos)',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SplatRoute = SplatImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -118,6 +125,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof PathlessGroupRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatImport
       parentRoute: typeof rootRoute
     }
     '/(dynamicDemos)/dynamic': {
@@ -252,6 +266,7 @@ const pathlessLayoutDemosRouteWithChildren =
 export interface FileRoutesByFullPath {
   '/': typeof pathlessLayoutDemosPathlessLayoutRouteWithChildren
   '': typeof PathlessGroupRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/dynamic': typeof dynamicDemosDynamicRouteRouteWithChildren
   '/sample': typeof PathlessGroupSampleRoute
   '/settings/theme': typeof SettingsThemeRoute
@@ -265,6 +280,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof pathlessLayoutDemosPathlessLayoutRouteWithChildren
   '': typeof PathlessGroupRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/sample': typeof PathlessGroupSampleRoute
   '/settings/theme': typeof SettingsThemeRoute
   '/settings': typeof SettingsIndexRoute
@@ -278,6 +294,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_pathlessGroup': typeof PathlessGroupRouteRouteWithChildren
+  '/$': typeof SplatRoute
   '/(dynamicDemos)/dynamic': typeof dynamicDemosDynamicRouteRouteWithChildren
   '/(pathlessLayoutDemos)': typeof pathlessLayoutDemosRouteWithChildren
   '/(pathlessLayoutDemos)/_pathlessLayout': typeof pathlessLayoutDemosPathlessLayoutRouteWithChildren
@@ -295,6 +312,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/$'
     | '/dynamic'
     | '/sample'
     | '/settings/theme'
@@ -307,6 +325,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/$'
     | '/sample'
     | '/settings/theme'
     | '/settings'
@@ -318,6 +337,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_pathlessGroup'
+    | '/$'
     | '/(dynamicDemos)/dynamic'
     | '/(pathlessLayoutDemos)'
     | '/(pathlessLayoutDemos)/_pathlessLayout'
@@ -334,6 +354,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PathlessGroupRouteRoute: typeof PathlessGroupRouteRouteWithChildren
+  SplatRoute: typeof SplatRoute
   dynamicDemosDynamicRouteRoute: typeof dynamicDemosDynamicRouteRouteWithChildren
   pathlessLayoutDemosRoute: typeof pathlessLayoutDemosRouteWithChildren
   SettingsThemeRoute: typeof SettingsThemeRoute
@@ -344,6 +365,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PathlessGroupRouteRoute: PathlessGroupRouteRouteWithChildren,
+  SplatRoute: SplatRoute,
   dynamicDemosDynamicRouteRoute: dynamicDemosDynamicRouteRouteWithChildren,
   pathlessLayoutDemosRoute: pathlessLayoutDemosRouteWithChildren,
   SettingsThemeRoute: SettingsThemeRoute,
@@ -363,6 +385,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_pathlessGroup",
+        "/$",
         "/(dynamicDemos)/dynamic",
         "/(pathlessLayoutDemos)",
         "/settings/theme",
@@ -378,6 +401,9 @@ export const routeTree = rootRoute
       "children": [
         "/_pathlessGroup/sample"
       ]
+    },
+    "/$": {
+      "filePath": "$.tsx"
     },
     "/(dynamicDemos)/dynamic": {
       "filePath": "(dynamicDemos)/dynamic/route.tsx",
