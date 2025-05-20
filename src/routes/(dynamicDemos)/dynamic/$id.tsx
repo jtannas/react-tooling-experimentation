@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(dynamicDemos)/dynamic/$id")({
 	component: RouteComponent,
@@ -7,5 +7,16 @@ export const Route = createFileRoute("/(dynamicDemos)/dynamic/$id")({
 function RouteComponent() {
 	const { id } = Route.useParams();
 
-	return <div>Hello "/dynamic/{id}"!</div>;
+	return (
+		<div>
+			Hello "/dynamic/{id}"!
+			<Link
+				className="block"
+				to="."
+				params={(prev) => ({ ...prev, id: id + 1 })}
+			>
+				Path param is a string by default
+			</Link>
+		</div>
+	);
 }
