@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Route as themeRoute } from "./theme";
 
 export const Route = createFileRoute("/settings/")({
 	component: RouteComponent,
@@ -11,7 +10,8 @@ function RouteComponent() {
 			Hello "/settings"!
 			<br />
 			<Link
-				to={themeRoute.to}
+				from={Route.fullPath}
+				to="./theme"
 				className="underline text-blue-500"
 				search={{ test: "Hello World" }}
 				preload="intent"
