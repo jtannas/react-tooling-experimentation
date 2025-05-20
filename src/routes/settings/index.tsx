@@ -14,6 +14,8 @@ function RouteComponent() {
 				to={themeRoute.to}
 				className="underline text-blue-500"
 				search={{ test: "Hello World" }}
+				preload="intent"
+				viewTransition={true}
 			>
 				Link to /settings/theme
 			</Link>
