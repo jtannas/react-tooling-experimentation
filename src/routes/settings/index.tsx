@@ -10,7 +10,11 @@ function RouteComponent() {
 		<div>
 			Hello "/settings"!
 			<br />
-			<Link to={themeRoute.to} className="underline text-blue-500">
+			<Link
+				to={themeRoute.to}
+				className="underline text-blue-500"
+				search={{ test: "Hello World" }}
+			>
 				Link to /settings/theme
 			</Link>
 		</div>
