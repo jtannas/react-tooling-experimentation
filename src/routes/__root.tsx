@@ -1,5 +1,16 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import {
+	createRootRoute,
+	Link,
+	Outlet,
+	retainSearchParams,
+	stripSearchParams,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import z from "zod";
+
+const rootSearchSchema = z.object({
+	root: z.enum(["a", "b", "c"]).catch("a"),
+});
 
 export const Route = createRootRoute({
 	component: () => (
@@ -31,4 +42,11 @@ export const Route = createRootRoute({
 		</>
 	),
 	notFoundComponent: () => <div>404: Not Found</div>,
+	validateSearch: rootSearchSchema,
+	search: {
+		middlewares: [
+			stripSearchParams({ root: "a" }),
+			retainSearchParams(["root"]), // Known issue: https://github.com/TanStack/router/issues/2845
+		],
+	},
 });
