@@ -1,6 +1,5 @@
 import {
 	createRootRoute,
-	Link,
 	linkOptions,
 	Outlet,
 	retainSearchParams,
@@ -8,6 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import z from "zod";
+import { CustomLink } from "../components/CustomLink";
 
 const rootSearchSchema = z.object({
 	root: z.enum(["a", "b", "c"]).catch("a"),
@@ -26,9 +26,9 @@ export const Route = createRootRoute({
 		<>
 			<div className="p-2 flex gap-2">
 				{navBarOptions.map((option) => (
-					<Link {...option} key={option.to} className="[&.active]:font-bold">
+					<CustomLink {...option} key={option.to}>
 						{option.label}
-					</Link>
+					</CustomLink>
 				))}
 			</div>
 			<hr />
