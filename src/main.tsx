@@ -7,7 +7,11 @@ import "./index.css";
 import { routeTree } from "./routeTree.gen";
 
 // Create a new router instance
-const router = createRouter({ routeTree, defaultPreload: "intent" });
+const router = createRouter({
+	routeTree,
+	defaultPreload: "intent",
+	context: { sampleContext: "Wizard" },
+});
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {

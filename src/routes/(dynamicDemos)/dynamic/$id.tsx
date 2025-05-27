@@ -5,9 +5,9 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const Route = createFileRoute("/(dynamicDemos)/dynamic/$id")({
 	component: RouteComponent,
-	loader: async ({ params }) => {
+	loader: async ({ params, context }) => {
 		await delay(1000);
-		return `loaded ${params.id}`;
+		return `loaded ${context.sampleContext} ${params.id}`;
 	},
 });
 

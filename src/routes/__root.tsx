@@ -1,5 +1,5 @@
 import {
-	createRootRoute,
+	createRootRouteWithContext,
 	linkOptions,
 	Outlet,
 	retainSearchParams,
@@ -21,7 +21,7 @@ const navBarOptions = linkOptions([
 	{ to: "/dynamic", label: "Dynamic" },
 ]);
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{ sampleContext: string }>()({
 	component: () => (
 		<>
 			<div className="p-2 flex gap-2">

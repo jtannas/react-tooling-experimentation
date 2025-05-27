@@ -5,6 +5,7 @@ export const Route = createFileRoute("/settings/")({
 });
 
 function RouteComponent() {
+	const { sampleContext } = Route.useRouteContext();
 	return (
 		<div>
 			Hello "/settings"!
@@ -18,6 +19,8 @@ function RouteComponent() {
 			>
 				Link to /settings/theme
 			</Link>
+			<br />
+			<p>Look at this injected context: {sampleContext}</p>
 		</div>
 	);
 }
