@@ -13,7 +13,6 @@ function RouteComponent() {
 				from={Route.fullPath}
 				to="./theme"
 				className="underline text-blue-500"
-				search={{ test: "Hello World" }}
 				preload="intent"
 				viewTransition={true}
 			>

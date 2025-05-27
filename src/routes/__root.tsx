@@ -1,6 +1,7 @@
 import {
 	createRootRoute,
 	Link,
+	linkOptions,
 	Outlet,
 	retainSearchParams,
 	stripSearchParams,
@@ -12,29 +13,23 @@ const rootSearchSchema = z.object({
 	root: z.enum(["a", "b", "c"]).catch("a"),
 });
 
+const navBarOptions = linkOptions([
+	{ to: "/", label: "Home" },
+	{ to: "/about", search: { example: "bar" }, label: "About" },
+	{ to: "/sample", label: "Sample" },
+	{ to: "/settings", label: "Settings" },
+	{ to: "/dynamic", label: "Dynamic" },
+]);
+
 export const Route = createRootRoute({
 	component: () => (
 		<>
 			<div className="p-2 flex gap-2">
-				<Link to="/" className="[&.active]:font-bold">
-					Home
-				</Link>{" "}
-				<Link
-					to="/about"
-					className="[&.active]:font-bold"
-					search={{ example: "bar" }}
-				>
-					About
-				</Link>
-				<Link to="/sample" className="[&.active]:font-bold">
-					Sample
-				</Link>
-				<Link to="/settings" className="[&.active]:font-bold">
-					Settings
-				</Link>
-				<Link to="/dynamic" className="[&.active]:font-bold">
-					Dynamic
-				</Link>
+				{navBarOptions.map((option) => (
+					<Link {...option} key={option.to} className="[&.active]:font-bold">
+						{option.label}
+					</Link>
+				))}
 			</div>
 			<hr />
 			<Outlet />
