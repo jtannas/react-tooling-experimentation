@@ -13,9 +13,12 @@ export const Route = createFileRoute("/(dynamicDemos)/dynamic/$id")({
 	// This ensures that important search params are explicitly marked as dependencies
 	beforeLoad: () => ({ injectedContext: "Powers" }),
 	loader: async ({ params, context }) => {
-		await delay(1000);
+		await delay(4000);
 		return `loaded ${context.sampleContext} ${context.injectedContext} ${params.id}`;
 	},
+	pendingMs: 0,
+	pendingMinMs: 500,
+	pendingComponent: () => <p>Loading...</p>,
 });
 
 function RouteComponent() {
