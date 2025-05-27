@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { CustomLink } from "../../../components/CustomLink";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -19,6 +19,29 @@ export const Route = createFileRoute("/(dynamicDemos)/dynamic/$id")({
 	pendingMs: 0,
 	pendingMinMs: 500,
 	pendingComponent: () => <p>Loading...</p>,
+	onError: () => console.error("error happened on route loading"),
+	onCatch: () => console.error("error occurred within the components"),
+	errorComponent: ({ error }) => {
+		const router = useRouter();
+
+		// // Fallback to the default ErrorComponent
+		// return <ErrorComponent error={error} />
+
+		return (
+			<div>
+				{error.message}
+				<button
+					type="button"
+					onClick={() => {
+						// Invalidate the route to reload the loader, which will also reset the error boundary
+						router.invalidate();
+					}}
+				>
+					retry
+				</button>
+			</div>
+		);
+	},
 });
 
 function RouteComponent() {
