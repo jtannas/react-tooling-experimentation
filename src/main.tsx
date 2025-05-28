@@ -9,8 +9,11 @@ import { routeTree } from "./routeTree.gen";
 // Create a new router instance
 const router = createRouter({
 	routeTree,
-	defaultPreload: "intent",
 	context: { sampleContext: "Wizard" },
+	// defaultStaleTime: 0 <--- this is already the default
+	defaultPreload: "intent",
+	// ToDo: When using TanstackQuery, it is better to let it handle determining when data is stale
+	// defaultPreloadStaleTime: 0
 });
 
 // Register the router instance for type safety
