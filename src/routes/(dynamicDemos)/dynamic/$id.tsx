@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { Await, createFileRoute, useRouter } from "@tanstack/react-router";
 import { CustomLink } from "../../../components/CustomLink";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -13,10 +13,11 @@ export const Route = createFileRoute("/(dynamicDemos)/dynamic/$id")({
 	// This ensures that important search params are explicitly marked as dependencies
 	beforeLoad: () => ({ injectedContext: "Powers" }),
 	loader: async ({ params, context }) => {
-		await delay(4000);
-		return `loaded ${context.sampleContext} ${context.injectedContext} ${params.id}`;
+		const nonAwait = delay(2000).then(() => "I am not awaited");
+		const awaited = await delay(250).then(() => "I am awaited");
+		return { awaited, nonAwait, params, context };
 	},
-	pendingMs: 0,
+	pendingMs: 500,
 	pendingMinMs: 500,
 	pendingComponent: () => <p>Loading...</p>,
 	onError: () => console.error("error happened on route loading"),
@@ -46,14 +47,24 @@ export const Route = createFileRoute("/(dynamicDemos)/dynamic/$id")({
 
 function RouteComponent() {
 	const { id } = Route.useParams();
-	const loaded = Route.useLoaderData();
+	const { awaited, nonAwait, context } = Route.useLoaderData();
 	return (
 		<div>
 			Hello "/dynamic/{id}"!
 			<CustomLink to="." params={(prev) => ({ ...prev, id: id + 1 })}>
 				<p>Path param is a string by default</p>
 			</CustomLink>
-			<p>{loaded}</p>
+			<p>Awaited in the loader: {awaited}</p>
+			{/* <p>Not awaited in the loader: {nonAwait}</p> */}
+			<p>
+				Not awaited in the loader:{" "}
+				<Await promise={nonAwait} fallback="Loading...">
+					{(data) => data}
+				</Await>
+			</p>
+			<p>Params ID: {id}</p>
+			<p>Sample Context: {context.sampleContext}</p>
+			<p>Injected Context: {context.injectedContext}</p>
 		</div>
 	);
 }
