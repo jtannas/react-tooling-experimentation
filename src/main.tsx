@@ -1,4 +1,8 @@
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import {
+	createRouteMask,
+	createRouter,
+	RouterProvider,
+} from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -6,9 +10,16 @@ import "./index.css";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
+const sampleRouteMask = createRouteMask({
+	routeTree,
+	from: "/settings/theme",
+	to: "/settings",
+});
+
 // Create a new router instance
 const router = createRouter({
 	routeTree,
+	routeMasks: [sampleRouteMask],
 	context: { sampleContext: "Wizard" },
 	// defaultStaleTime: 0 <--- this is already the default
 	defaultPreload: "intent",
