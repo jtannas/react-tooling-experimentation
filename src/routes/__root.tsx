@@ -1,8 +1,10 @@
 import {
 	createRootRouteWithContext,
+	HeadContent,
 	linkOptions,
 	Outlet,
 	retainSearchParams,
+	Scripts,
 	stripSearchParams,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
@@ -22,8 +24,25 @@ const navBarOptions = linkOptions([
 ]);
 
 export const Route = createRootRouteWithContext<{ sampleContext: string }>()({
+	head: () => ({
+		meta: [
+			{
+				name: "ReactTestPlatform",
+				content: "A platform for testing react tools",
+				title: "Home Page",
+			},
+		],
+	}),
+	scripts: () => [
+		{
+			src: "https://cdn.jsdelivr.net/npm/js-hello-world@1.0.0/helloWorld.min.js",
+			async: true,
+		},
+	],
 	component: () => (
 		<>
+			<HeadContent />
+			<Scripts />
 			<div className="p-2 flex gap-2">
 				{navBarOptions.map((option) => (
 					<CustomLink {...option} key={option.to}>
