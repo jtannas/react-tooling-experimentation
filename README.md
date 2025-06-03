@@ -124,6 +124,8 @@ Repo for testing out different React tools
 - Since this is added to by `beforeLoad`, the context is not intended for async `loader` data 
 - Instead, it aims to assist with the testing/configuration difficulties introduced by having so much wrapped into the router
 - It is effectively a tool for dependency injection. You can inject whatever you need at an upper route and have it propagate down the entire route tree.
+- Interestingly, it also allows you to pass data _up_ the component tree to layouts and root routes via `useRouterState`
+- This makes it very useful for breadcrumbs
 
 ### Promise Handling
 
