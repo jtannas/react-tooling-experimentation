@@ -11,16 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SignInImport } from './routes/sign-in'
+import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 import { Route as DemoClerkImport } from './routes/demo.clerk'
+import { Route as AuthProtectedImport } from './routes/_auth/protected'
 
 // Create/Update Routes
 
-const SignInRoute = SignInImport.update({
-  id: '/sign-in',
-  path: '/sign-in',
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -42,6 +42,12 @@ const DemoClerkRoute = DemoClerkImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthProtectedRoute = AuthProtectedImport.update({
+  id: '/protected',
+  path: '/protected',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -53,12 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/sign-in': {
-      id: '/sign-in'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof SignInImport
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/protected': {
+      id: '/_auth/protected'
+      path: '/protected'
+      fullPath: '/protected'
+      preLoaderRoute: typeof AuthProtectedImport
+      parentRoute: typeof AuthImport
     }
     '/demo/clerk': {
       id: '/demo/clerk'
@@ -79,16 +92,28 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthRouteChildren {
+  AuthProtectedRoute: typeof AuthProtectedRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthProtectedRoute: AuthProtectedRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/sign-in': typeof SignInRoute
+  '': typeof AuthRouteWithChildren
+  '/protected': typeof AuthProtectedRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/sign-in': typeof SignInRoute
+  '': typeof AuthRouteWithChildren
+  '/protected': typeof AuthProtectedRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
@@ -96,30 +121,37 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/sign-in': typeof SignInRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/_auth/protected': typeof AuthProtectedRoute
   '/demo/clerk': typeof DemoClerkRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/demo/clerk' | '/demo/tanstack-query'
+  fullPaths: '/' | '' | '/protected' | '/demo/clerk' | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/demo/clerk' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/sign-in' | '/demo/clerk' | '/demo/tanstack-query'
+  to: '/' | '' | '/protected' | '/demo/clerk' | '/demo/tanstack-query'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/_auth/protected'
+    | '/demo/clerk'
+    | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SignInRoute: typeof SignInRoute
+  AuthRoute: typeof AuthRouteWithChildren
   DemoClerkRoute: typeof DemoClerkRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SignInRoute: SignInRoute,
+  AuthRoute: AuthRouteWithChildren,
   DemoClerkRoute: DemoClerkRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
@@ -135,7 +167,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/sign-in",
+        "/_auth",
         "/demo/clerk",
         "/demo/tanstack-query"
       ]
@@ -143,8 +175,15 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
-    "/sign-in": {
-      "filePath": "sign-in.tsx"
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/protected"
+      ]
+    },
+    "/_auth/protected": {
+      "filePath": "_auth/protected.tsx",
+      "parent": "/_auth"
     },
     "/demo/clerk": {
       "filePath": "demo.clerk.tsx"

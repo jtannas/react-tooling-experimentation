@@ -18,7 +18,7 @@ export default function Header() {
         </div>
 
         <div className="px-2 font-bold">
-          <Link to="/sign-in">Sign In</Link>
+          <Link to="/protected">Protected</Link>
         </div>
       </nav>
 
