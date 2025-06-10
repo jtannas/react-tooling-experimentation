@@ -1,6 +1,6 @@
+import { OrganizationSwitcher } from "@clerk/clerk-react";
 import { SidebarIcon } from "lucide-react";
 
-import { SearchForm } from "~/components/search-form";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -31,6 +31,10 @@ export function SiteHeader() {
 				<Breadcrumb className="hidden sm:block">
 					<BreadcrumbList>
 						<BreadcrumbItem>
+							<OrganizationSwitcher hidePersonal />
+						</BreadcrumbItem>
+						<BreadcrumbSeparator />
+						<BreadcrumbItem>
 							<BreadcrumbLink href="#">
 								Building Your Application
 							</BreadcrumbLink>
@@ -41,7 +45,10 @@ export function SiteHeader() {
 						</BreadcrumbItem>
 					</BreadcrumbList>
 				</Breadcrumb>
-				<SearchForm className="w-full sm:ml-auto sm:w-auto" />
+				{/* TODO: Figure out how to size this more appropriately*/}
+				<div className="block sm:hidden">
+					<OrganizationSwitcher hidePersonal />
+				</div>
 			</div>
 		</header>
 	);

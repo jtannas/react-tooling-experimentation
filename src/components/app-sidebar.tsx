@@ -4,8 +4,8 @@ import {
 	Command,
 	Frame,
 	LifeBuoy,
-	Map,
 	PieChart,
+	PlaneTakeoff,
 	Send,
 	Settings2,
 	SquareTerminal,
@@ -21,9 +21,6 @@ import {
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
-	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
 } from "~/components/ui/sidebar";
 
 const data = {
@@ -145,7 +142,7 @@ const data = {
 		{
 			name: "Travel",
 			url: "#",
-			icon: Map,
+			icon: PlaneTakeoff,
 		},
 	],
 };
@@ -157,21 +154,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			{...props}
 		>
 			<SidebarHeader>
-				<SidebarMenu>
-					<SidebarMenuItem>
-						<SidebarMenuButton size="lg" asChild>
-							<a href="#">
-								<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-									<Command className="size-4" />
-								</div>
-								<div className="grid flex-1 text-left text-sm leading-tight">
-									<span className="truncate font-medium">Acme Inc</span>
-									<span className="truncate text-xs">Enterprise</span>
-								</div>
-							</a>
-						</SidebarMenuButton>
-					</SidebarMenuItem>
-				</SidebarMenu>
+				<div className="flex flex-row gap-2">
+					<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+						<Command className="size-4" />
+					</div>
+					<div className="grid flex-1 text-left text-sm leading-tight">
+						<span className="truncate font-medium">SrsBsnsApp</span>
+						<span className="truncate text-xs">A Serious Enterprise</span>
+					</div>
+				</div>
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />
