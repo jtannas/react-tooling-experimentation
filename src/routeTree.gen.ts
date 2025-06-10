@@ -12,6 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as OrgsIndexImport } from './routes/orgs/index'
+import { Route as OrgsSlugRouteImport } from './routes/orgs/$slug/route'
+import { Route as OrgsSlugIndexImport } from './routes/orgs/$slug/index'
+import { Route as OrgsSlugLandingImport } from './routes/orgs/$slug/landing'
 
 // Create/Update Routes
 
@@ -19,6 +23,30 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const OrgsIndexRoute = OrgsIndexImport.update({
+  id: '/orgs/',
+  path: '/orgs/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const OrgsSlugRouteRoute = OrgsSlugRouteImport.update({
+  id: '/orgs/$slug',
+  path: '/orgs/$slug',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const OrgsSlugIndexRoute = OrgsSlugIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OrgsSlugRouteRoute,
+} as any)
+
+const OrgsSlugLandingRoute = OrgsSlugLandingImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => OrgsSlugRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -32,39 +60,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/orgs/$slug': {
+      id: '/orgs/$slug'
+      path: '/orgs/$slug'
+      fullPath: '/orgs/$slug'
+      preLoaderRoute: typeof OrgsSlugRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/orgs/': {
+      id: '/orgs/'
+      path: '/orgs'
+      fullPath: '/orgs'
+      preLoaderRoute: typeof OrgsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/orgs/$slug/landing': {
+      id: '/orgs/$slug/landing'
+      path: '/landing'
+      fullPath: '/orgs/$slug/landing'
+      preLoaderRoute: typeof OrgsSlugLandingImport
+      parentRoute: typeof OrgsSlugRouteImport
+    }
+    '/orgs/$slug/': {
+      id: '/orgs/$slug/'
+      path: '/'
+      fullPath: '/orgs/$slug/'
+      preLoaderRoute: typeof OrgsSlugIndexImport
+      parentRoute: typeof OrgsSlugRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface OrgsSlugRouteRouteChildren {
+  OrgsSlugLandingRoute: typeof OrgsSlugLandingRoute
+  OrgsSlugIndexRoute: typeof OrgsSlugIndexRoute
+}
+
+const OrgsSlugRouteRouteChildren: OrgsSlugRouteRouteChildren = {
+  OrgsSlugLandingRoute: OrgsSlugLandingRoute,
+  OrgsSlugIndexRoute: OrgsSlugIndexRoute,
+}
+
+const OrgsSlugRouteRouteWithChildren = OrgsSlugRouteRoute._addFileChildren(
+  OrgsSlugRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/orgs/$slug': typeof OrgsSlugRouteRouteWithChildren
+  '/orgs': typeof OrgsIndexRoute
+  '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
+  '/orgs/$slug/': typeof OrgsSlugIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/orgs': typeof OrgsIndexRoute
+  '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
+  '/orgs/$slug': typeof OrgsSlugIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/orgs/$slug': typeof OrgsSlugRouteRouteWithChildren
+  '/orgs/': typeof OrgsIndexRoute
+  '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
+  '/orgs/$slug/': typeof OrgsSlugIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/orgs/$slug'
+    | '/orgs'
+    | '/orgs/$slug/landing'
+    | '/orgs/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/orgs' | '/orgs/$slug/landing' | '/orgs/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/orgs/$slug'
+    | '/orgs/'
+    | '/orgs/$slug/landing'
+    | '/orgs/$slug/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OrgsSlugRouteRoute: typeof OrgsSlugRouteRouteWithChildren
+  OrgsIndexRoute: typeof OrgsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OrgsSlugRouteRoute: OrgsSlugRouteRouteWithChildren,
+  OrgsIndexRoute: OrgsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +173,31 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/orgs/$slug",
+        "/orgs/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/orgs/$slug": {
+      "filePath": "orgs/$slug/route.tsx",
+      "children": [
+        "/orgs/$slug/landing",
+        "/orgs/$slug/"
+      ]
+    },
+    "/orgs/": {
+      "filePath": "orgs/index.tsx"
+    },
+    "/orgs/$slug/landing": {
+      "filePath": "orgs/$slug/landing.tsx",
+      "parent": "/orgs/$slug"
+    },
+    "/orgs/$slug/": {
+      "filePath": "orgs/$slug/index.tsx",
+      "parent": "/orgs/$slug"
     }
   }
 }
