@@ -7,9 +7,9 @@ Repo for testing out different React tools
 - [x] Mise; https://mise.jdx.dev/
 - [x] Tanstack Router; https://tanstack.com/router/latest
   - [x] Prefetching
-  - [ ] Auth
-  - [ ] Multi-tenant application
-  - [ ] Transitions
+  - [x] Auth
+  - [x] Multi-tenant application
+  - [x] Transitions
 - [ ] Tanstack Form; https://tanstack.com/form/latest
   - [ ] Integration w/ Tanstack Router for query parameter -> form init
 - [ ] Zod validations in depth; https://zod.dev/
@@ -18,7 +18,7 @@ Repo for testing out different React tools
   - [ ] Infinite Queries
   - [ ] Parsing query data into local class
 - [ ] Clerk advanced features:
-  - [ ] organization features; https://clerk.com/docs/organizations/overview
+  - [x] organization features; https://clerk.com/docs/organizations/overview
   - [ ] subscriptions; https://clerk.com/billing
 - [x] Biome v2.0 (currently beta); https://biomejs.dev/blog/biome-v2-0-beta/
 - [ ] ShadCN/UI; https://ui.shadcn.com/

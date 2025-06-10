@@ -16,6 +16,18 @@ const router = createRouter({
 	scrollRestoration: true,
 	defaultStructuralSharing: true,
 	defaultPreloadStaleTime: 0,
+	// defaultViewTransition: true,
+	defaultViewTransition: {
+		types: ({ fromLocation, toLocation }) => {
+			if (!fromLocation) return [];
+			const { pathname: fromPath } = fromLocation;
+			const { pathname: toPath } = toLocation;
+			if (toPath === fromPath) return [];
+			if (toPath.startsWith(fromPath)) return ["slide-left"]; // enter nested route
+			if (fromPath.startsWith(toPath)) return ["slide-right"]; // exit nested route
+			return [];
+		},
+	},
 });
 
 // Register the router instance for type safety

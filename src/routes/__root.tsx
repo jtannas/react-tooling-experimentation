@@ -45,7 +45,9 @@ function SignedInComponent() {
 	return (
 		<UserContext value={{ user }}>
 			<Header />
-			<Outlet />
+			<div className="[view-transition-name:main-content]">
+				<Outlet />
+			</div>
 		</UserContext>
 	);
 }
