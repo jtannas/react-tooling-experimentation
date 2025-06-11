@@ -1,5 +1,10 @@
 "use client";
 
+import {
+	Link,
+	type RegisteredRouter,
+	type ValidateLinkOptions,
+} from "@tanstack/react-router";
 import { ChevronRight, type LucideIcon } from "lucide-react";
 
 import {
@@ -19,17 +24,16 @@ import {
 	SidebarMenuSubItem,
 } from "~/components/ui/sidebar";
 
-export function NavMain({
+export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 	items,
 }: {
 	items: {
 		title: string;
-		url: string;
+		linkOptions: ValidateLinkOptions<TRouter, TOptions>;
 		icon: LucideIcon;
-		isActive?: boolean;
 		items?: {
 			title: string;
-			url: string;
+			linkOptions: ValidateLinkOptions<TRouter, TOptions>;
 		}[];
 	}[];
 }) {
@@ -38,13 +42,13 @@ export function NavMain({
 			<SidebarGroupLabel>Platform</SidebarGroupLabel>
 			<SidebarMenu>
 				{items.map((item) => (
-					<Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+					<Collapsible key={item.title} asChild defaultOpen>
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild tooltip={item.title}>
-								<a href={item.url}>
+								<Link {...item.linkOptions}>
 									<item.icon />
 									<span>{item.title}</span>
-								</a>
+								</Link>
 							</SidebarMenuButton>
 							{item.items?.length ? (
 								<>
@@ -59,9 +63,9 @@ export function NavMain({
 											{item.items?.map((subItem) => (
 												<SidebarMenuSubItem key={subItem.title}>
 													<SidebarMenuSubButton asChild>
-														<a href={subItem.url}>
+														<Link {...subItem.linkOptions}>
 															<span>{subItem.title}</span>
-														</a>
+														</Link>
 													</SidebarMenuSubButton>
 												</SidebarMenuSubItem>
 											))}

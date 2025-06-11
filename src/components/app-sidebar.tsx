@@ -1,18 +1,17 @@
-import { UserButton } from "@clerk/clerk-react";
+import { UserButton, useOrganization } from "@clerk/clerk-react";
+import { linkOptions } from "@tanstack/react-router";
 import {
-	BookOpen,
-	Bot,
 	Command,
 	Frame,
+	Home,
 	LifeBuoy,
 	PieChart,
+	PlaneLanding,
 	PlaneTakeoff,
 	Send,
-	Settings2,
-	SquareTerminal,
 } from "lucide-react";
 import type * as React from "react";
-
+import { useMemo } from "react";
 import { NavMain } from "~/components/nav-main";
 import { NavProjects } from "~/components/nav-projects";
 import { NavSecondary } from "~/components/nav-secondary";
@@ -25,94 +24,26 @@ import {
 	SidebarMenuItem,
 } from "~/components/ui/sidebar";
 
-const data = {
-	navMain: [
+const navConfig = (slug: string | undefined | null) => {
+	const organizationLinks = !slug ? [] : [
 		{
-			title: "Playground",
-			url: "#",
-			icon: SquareTerminal,
-			isActive: true,
-			items: [
-				{
-					title: "History",
-					url: "#",
-				},
-				{
-					title: "Starred",
-					url: "#",
-				},
-				{
-					title: "Settings",
-					url: "#",
-				},
-			],
+			title: "Home",
+			icon: Home,
+			linkOptions: linkOptions({ to: "/orgs/$slug", params: { slug } }),
+			items: [{
+				title: "Landing",
+				icon: PlaneLanding,
+				linkOptions: linkOptions({ to: "/orgs/$slug/landing", params: { slug } })
+			}]
 		},
 		{
-			title: "Models",
-			url: "#",
-			icon: Bot,
-			items: [
-				{
-					title: "Genesis",
-					url: "#",
-				},
-				{
-					title: "Explorer",
-					url: "#",
-				},
-				{
-					title: "Quantum",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Documentation",
-			url: "#",
-			icon: BookOpen,
-			items: [
-				{
-					title: "Introduction",
-					url: "#",
-				},
-				{
-					title: "Get Started",
-					url: "#",
-				},
-				{
-					title: "Tutorials",
-					url: "#",
-				},
-				{
-					title: "Changelog",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Settings",
-			url: "#",
-			icon: Settings2,
-			items: [
-				{
-					title: "General",
-					url: "#",
-				},
-				{
-					title: "Team",
-					url: "#",
-				},
-				{
-					title: "Billing",
-					url: "#",
-				},
-				{
-					title: "Limits",
-					url: "#",
-				},
-			],
-		},
-	],
+			title: "Landing",
+			icon: PlaneLanding,
+			linkOptions: linkOptions({ to: "/orgs/$slug/landing", params: { slug } })
+		}
+	]
+	return {
+	navMain: organizationLinks,
 	navSecondary: [
 		{
 			title: "Support",
@@ -142,9 +73,14 @@ const data = {
 			icon: PlaneTakeoff,
 		},
 	],
+}
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+	const {organization} = useOrganization()
+	const { slug } = organization ?? {}
+	const data = useMemo(() => navConfig(slug), [slug])
+	
 	return (
 		<Sidebar
 			className="top-(--header-height) h-[calc(100svh-var(--header-height))]! [view-transition-name:sidebar]"
