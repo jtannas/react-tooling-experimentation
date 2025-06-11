@@ -56,7 +56,7 @@ function SignedInComponent() {
 					<SiteHeader />
 					<div className="flex flex-1">
 						<AppSidebar />
-						<SidebarInset>
+						<SidebarInset className="[view-transition-name:main-content]">
 							<Outlet />
 						</SidebarInset>
 					</div>
