@@ -10,7 +10,8 @@ Repo for testing out different React tools
   - [x] Auth
   - [x] Multi-tenant application
   - [x] Transitions
-  - [ ] Functional Breadcrumbs
+  - [x] Functional Breadcrumbs
+  - [ ] Type-safe Custom Links
 - [ ] Tanstack Form; https://tanstack.com/form/latest
   - [ ] Integration w/ Tanstack Router for query parameter -> form init
 - [ ] Zod validations in depth; https://zod.dev/
@@ -23,9 +24,9 @@ Repo for testing out different React tools
   - [ ] subscriptions; https://clerk.com/billing
 - [x] Biome v2.0 (currently beta); https://biomejs.dev/blog/biome-v2-0-beta/
 - [x] ShadCN/UI; https://ui.shadcn.com/
-- [ ] Storybook Component Testing; https://storybook.js.org/
+- [ ] Storybook v9 Testing; https://storybook.js.org/
 - [ ] Playwright E2E testing; https://playwright.dev/
-- [ ] Stripe Element; https://stripe.com/en-ca/payments/elements
+- [ ] Stripe Elements; https://stripe.com/en-ca/payments/elements
 - [ ] Supabase; https://supabase.com/
 - [ ] React Joyride for guided tours; https://react-joyride.com/
 - [ ] Bun unit testing; https://bun.sh/

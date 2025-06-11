@@ -26,7 +26,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		<ClerkProvider>
 			<ClerkLoading>
 				<div className="w-screen h-screen flex items-center justify-center">
-					<LoaderCircle/>
+					<LoaderCircle />
 				</div>
 			</ClerkLoading>
 
@@ -39,7 +39,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				</SignedIn>
 			</ClerkLoaded>
 
-			<TanStackRouterDevtools />
+			<TanStackRouterDevtools position="top-right" />
 			<TanStackQueryLayout />
 		</ClerkProvider>
 	),

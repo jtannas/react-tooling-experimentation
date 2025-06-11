@@ -1,3 +1,4 @@
+import { UserButton } from "@clerk/clerk-react";
 import {
 	BookOpen,
 	Bot,
@@ -15,20 +16,16 @@ import type * as React from "react";
 import { NavMain } from "~/components/nav-main";
 import { NavProjects } from "~/components/nav-projects";
 import { NavSecondary } from "~/components/nav-secondary";
-import { NavUser } from "~/components/nav-user";
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
 	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuItem,
 } from "~/components/ui/sidebar";
 
 const data = {
-	user: {
-		name: "shadcn",
-		email: "m@example.com",
-		avatar: "/avatars/shadcn.jpg",
-	},
 	navMain: [
 		{
 			title: "Playground",
@@ -170,7 +167,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<NavSecondary items={data.navSecondary} className="mt-auto" />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser user={data.user} />
+				<SidebarMenu>
+					<SidebarMenuItem>
+						<UserButton
+							showName
+							appearance={{
+								elements: {
+									userButtonBox: {
+										flexDirection: "row-reverse",
+									},
+								},
+							}}
+						/>
+					</SidebarMenuItem>
+				</SidebarMenu>
 			</SidebarFooter>
 		</Sidebar>
 	);
