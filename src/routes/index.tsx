@@ -7,22 +7,20 @@ import { createFileRoute, useLayoutEffect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
-	loader: () => {},
 });
 
 function RouteComponent() {
-	const { organization } = useOrganization();
+	const { organization, isLoaded } = useOrganization();
 	const { userMemberships } = useOrganizationList({ userMemberships: true });
 	const navigate = Route.useNavigate();
 	useLayoutEffect(() => {
-		if (organization?.slug)
+		if (isLoaded && organization?.slug)
 			navigate({ to: "/orgs/$slug", params: { slug: organization.slug } });
-		if (userMemberships.count) {
-			navigate({ to: "/orgs" });
-		}
-	}, [userMemberships.count, organization?.slug]);
+		if (userMemberships.count) navigate({ to: "/orgs" });
+	}, [isLoaded, userMemberships.count, organization?.slug]);
 
-	if (userMemberships.isLoading) return <p>Loading Organizations...</p>;
+	if (!isLoaded || userMemberships.isLoading)
+		return <p>Loading Organizations...</p>;
 	if (userMemberships.isError) return <p>Error While Loading Organizations!</p>;
 
 	return (

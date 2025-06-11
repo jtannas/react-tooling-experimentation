@@ -8,6 +8,7 @@ import { useLayoutEffect } from "react";
 import { OrgContext } from "~/integrations/clerk/useAppOrg";
 
 export const Route = createFileRoute("/orgs/$slug")({
+	loader: () => ({ breadcrumb: "Home" }),
 	component: RouteComponent,
 });
 

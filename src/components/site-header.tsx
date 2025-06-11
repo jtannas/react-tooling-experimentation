@@ -1,4 +1,5 @@
 import { OrganizationSwitcher } from "@clerk/clerk-react";
+import { isMatch, Link, useLocation, useMatches } from "@tanstack/react-router";
 import { SidebarIcon } from "lucide-react";
 
 import {
@@ -14,7 +15,14 @@ import { Separator } from "~/components/ui/separator";
 import { useSidebar } from "~/components/ui/sidebar";
 
 export function SiteHeader() {
+	const pathname = useLocation({ select: (loc) => loc.pathname });
 	const { toggleSidebar } = useSidebar();
+	const matches = useMatches();
+	if (matches.some((match) => match.status === "pending")) return null;
+
+	const matchesWithCrumbs = matches.filter((match) =>
+		isMatch(match, "loaderData.breadcrumb"),
+	);
 
 	return (
 		<header className="bg-background sticky top-0 z-50 flex w-full items-center border-b">
@@ -31,23 +39,40 @@ export function SiteHeader() {
 				<Breadcrumb className="hidden sm:block">
 					<BreadcrumbList>
 						<BreadcrumbItem>
-							<OrganizationSwitcher hidePersonal />
+							<OrganizationSwitcher
+								hidePersonal
+								afterSelectOrganizationUrl="/orgs/:slug"
+								afterCreateOrganizationUrl="/orgs/:slug/landing"
+							/>
 						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbLink href="#">
-								Building Your Application
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>Data Fetching</BreadcrumbPage>
-						</BreadcrumbItem>
+						{matchesWithCrumbs.map((match) => (
+							<>
+								<BreadcrumbSeparator />
+								<BreadcrumbItem key={match.pathname}>
+									{match.pathname !== pathname && (
+										<BreadcrumbLink asChild>
+											<Link to={match.pathname}>
+												{match.loaderData?.breadcrumb}
+											</Link>
+										</BreadcrumbLink>
+									)}
+									{match.pathname === pathname && (
+										<BreadcrumbPage>
+											{match.loaderData?.breadcrumb}
+										</BreadcrumbPage>
+									)}
+								</BreadcrumbItem>
+							</>
+						))}
 					</BreadcrumbList>
 				</Breadcrumb>
 				{/* TODO: Figure out how to size this more appropriately*/}
 				<div className="block sm:hidden">
-					<OrganizationSwitcher hidePersonal />
+					<OrganizationSwitcher
+						hidePersonal
+						afterSelectOrganizationUrl="/orgs/:slug"
+						afterCreateOrganizationUrl="/orgs/:slug/landing"
+					/>
 				</div>
 			</div>
 		</header>

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/orgs/$slug/landing")({
+	loader: () => ({ breadcrumb: "Landing" }),
 	component: RouteComponent,
 });
 
