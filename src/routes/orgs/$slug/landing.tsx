@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { LinkButton } from "~/components/link-button";
 
 export const Route = createFileRoute("/orgs/$slug/landing")({
 	loader: () => ({ breadcrumb: "Landing" }),
@@ -11,9 +12,10 @@ function RouteComponent() {
 			<h1 className="text-4xl font-extrabold">
 				Welcome to your new organization!
 			</h1>
-			<Link className="text-blue-500" to="..">
-				Go To Dashboard
-			</Link>
+
+			<LinkButton to=".." variant="secondary">
+				Go To Main Page
+			</LinkButton>
 		</div>
 	);
 }

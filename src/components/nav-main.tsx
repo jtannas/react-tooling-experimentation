@@ -32,7 +32,11 @@ interface LinkConfig<TRouter extends RegisteredRouter, TOptions> {
 
 export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 	items,
-}: { items: (LinkConfig<TRouter, TOptions> & { items?: LinkConfig<TRouter, TOptions>[] })[]}) {
+}: {
+	items: (LinkConfig<TRouter, TOptions> & {
+		items?: LinkConfig<TRouter, TOptions>[];
+	})[];
+}) {
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>Platform</SidebarGroupLabel>
