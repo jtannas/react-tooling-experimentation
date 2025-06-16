@@ -1,0 +1,10 @@
+import { createFileRoute } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/orgs/$slug/query/")({
+	loader: () => ({ breadcrumb: "Tanstack Query" }),
+	component: RouteComponent,
+});
+
+function RouteComponent() {
+	return <div>ToDo: Test advanced features on Tanstack Query</div>;
+}
