@@ -24,19 +24,15 @@ import {
 	SidebarMenuSubItem,
 } from "~/components/ui/sidebar";
 
+interface LinkConfig<TRouter extends RegisteredRouter, TOptions> {
+	title: string;
+	linkOptions: ValidateLinkOptions<TRouter, TOptions>;
+	icon?: LucideIcon;
+}
+
 export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 	items,
-}: {
-	items: {
-		title: string;
-		linkOptions: ValidateLinkOptions<TRouter, TOptions>;
-		icon: LucideIcon;
-		items?: {
-			title: string;
-			linkOptions: ValidateLinkOptions<TRouter, TOptions>;
-		}[];
-	}[];
-}) {
+}: { items: (LinkConfig<TRouter, TOptions> & { items?: LinkConfig<TRouter, TOptions>[] })[]}) {
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -46,7 +42,7 @@ export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 						<SidebarMenuItem>
 							<SidebarMenuButton asChild tooltip={item.title}>
 								<Link {...item.linkOptions}>
-									<item.icon />
+									{item.icon && <item.icon />}
 									<span>{item.title}</span>
 								</Link>
 							</SidebarMenuButton>
@@ -64,6 +60,7 @@ export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 												<SidebarMenuSubItem key={subItem.title}>
 													<SidebarMenuSubButton asChild>
 														<Link {...subItem.linkOptions}>
+															{subItem.icon && <subItem.icon />}
 															<span>{subItem.title}</span>
 														</Link>
 													</SidebarMenuSubButton>
