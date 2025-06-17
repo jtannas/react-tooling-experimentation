@@ -11,7 +11,7 @@ Repo for testing out different React tools
   - [x] Multi-tenant application
   - [x] Transitions
   - [x] Functional Breadcrumbs
-  - [ ] Type-safe Custom Links
+  - [x] Type-safe Custom Links
 - [ ] Tanstack Form; https://tanstack.com/form/latest
   - [ ] Integration w/ Tanstack Router for query parameter -> form init
 - [ ] Zod validations in depth; https://zod.dev/
