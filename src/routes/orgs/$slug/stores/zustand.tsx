@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { Button } from "~/components/ui/button";
 
 export const Route = createFileRoute("/orgs/$slug/stores/zustand")({
-	loader: () => ({ breadcrumb: "Zustand" }),
+	staticData: { title: "Zustand" },
 	component: RouteComponent,
 });
 

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Button } from "~/components/ui/button";
 
 export const Route = createFileRoute("/orgs/$slug/stores/tanstack")({
-	loader: () => ({ breadcrumb: "Tanstack" }),
+	staticData: { title: "Tanstack" },
 	component: RouteComponent,
 });
 

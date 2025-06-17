@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/orgs/$slug/forms/")({
-	loader: () => ({ breadcrumb: "Tanstack Form" }),
+	staticData: { title: "Tanstack Form" },
 	component: RouteComponent,
 });
 

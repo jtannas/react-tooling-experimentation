@@ -6,7 +6,7 @@ import { Label } from "~/components/ui/label";
 
 export const Route = createFileRoute("/orgs/$slug/zodV4/basic")({
 	component: RouteComponent,
-	loader: () => ({ breadcrumb: "Basic" }),
+	staticData: { title: "Basic" },
 });
 
 const Player = z.object({

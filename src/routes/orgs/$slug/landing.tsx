@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LinkButton } from "~/components/link-button";
 
 export const Route = createFileRoute("/orgs/$slug/landing")({
-	loader: () => ({ breadcrumb: "Landing" }),
+	staticData: { title: "Landing" },
 	component: RouteComponent,
 });
 

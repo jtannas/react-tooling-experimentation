@@ -21,7 +21,7 @@ export function SiteHeader() {
 	if (matches.some((match) => match.status === "pending")) return null;
 
 	const matchesWithCrumbs = matches.filter((match) =>
-		isMatch(match, "loaderData.breadcrumb"),
+		isMatch(match, "staticData.title"),
 	);
 
 	return (
@@ -52,13 +52,13 @@ export function SiteHeader() {
 									{match.pathname !== pathname && (
 										<BreadcrumbLink asChild>
 											<Link to={match.pathname}>
-												{match.loaderData?.breadcrumb}
+												{match.staticData.title}
 											</Link>
 										</BreadcrumbLink>
 									)}
 									{match.pathname === pathname && (
 										<BreadcrumbPage>
-											{match.loaderData?.breadcrumb}
+											{match.staticData.title}
 										</BreadcrumbPage>
 									)}
 								</BreadcrumbItem>

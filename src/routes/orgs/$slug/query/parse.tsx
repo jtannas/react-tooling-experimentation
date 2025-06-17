@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/orgs/$slug/query/parse")({
-	loader: () => ({ breadcrumb: "Parsing Data" }),
+	staticData: { title: "Parsing Data" },
 	component: RouteComponent,
 });
 
