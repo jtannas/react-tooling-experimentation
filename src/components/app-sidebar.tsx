@@ -12,6 +12,7 @@ import {
 	Send,
 	Server,
 	Table,
+	Vault,
 } from "lucide-react";
 import type * as React from "react";
 import { useMemo } from "react";
@@ -63,6 +64,30 @@ const navConfig = (slug: string | undefined | null) => {
 							title: "Parsing Data",
 							linkOptions: linkOptions({
 								to: "/orgs/$slug/query/parse",
+								params: { slug },
+							}),
+						},
+					],
+				},
+				{
+					title: "Data Stores",
+					icon: Vault,
+					linkOptions: linkOptions({
+						to: "/orgs/$slug/stores",
+						params: { slug },
+					}),
+					items: [
+						{
+							title: "Tanstack Store",
+							linkOptions: linkOptions({
+								to: "/orgs/$slug/stores/tanstack",
+								params: { slug },
+							}),
+						},
+						{
+							title: "Zustand",
+							linkOptions: linkOptions({
+								to: "/orgs/$slug/stores/zustand",
 								params: { slug },
 							}),
 						},

@@ -32,7 +32,8 @@ Repo for testing out different React tools
 - [ ] Bun unit testing; https://bun.sh/
 - [ ] `fetch` automatic token renewal
   - [ ] `ky` as a possible simplification; https://github.com/sindresorhus/ky
-- [ ] Zustand as primary local data store; https://zustand.docs.pmnd.rs/getting-started/introduction
+- [x] Zustand for local data; https://zustand.docs.pmnd.rs/getting-started/introduction
+  - [x] Tanstack Store - still v0 but give it a test; https://tanstack.com/store/latest/docs/framework/react/quick-start
 - [x] Tailwind v4 https://tailwindcss.com/blog/tailwindcss-v4
   - [ ] container queries
   - [ ] transitions
