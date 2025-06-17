@@ -5,6 +5,7 @@ import {
 	FormInput,
 	Frame,
 	Home,
+	InspectIcon,
 	LifeBuoy,
 	PieChart,
 	PlaneLanding,
@@ -108,6 +109,51 @@ const navConfig = (slug: string | undefined | null) => {
 						to: "/orgs/$slug/forms",
 						params: { slug },
 					}),
+				},
+				{
+					title: "Zod",
+					icon: InspectIcon,
+					linkOptions: linkOptions({
+						to: "/orgs/$slug/zodV4",
+						params: { slug },
+					}),
+					items: [
+						{
+							title: "Basic",
+							linkOptions: linkOptions({
+								to: "/orgs/$slug/zodV4/basic",
+								params: { slug },
+							}),
+						},
+						{
+							title: "Path Params",
+							linkOptions: linkOptions({
+								to: "/orgs/$slug/zodV4/path/$foo",
+								params: { slug, foo: "abc" },
+							}),
+						},
+						{
+							title: "Search Params",
+							linkOptions: linkOptions({
+								to: "/orgs/$slug/zodV4/search",
+								params: { slug },
+							}),
+						},
+						{
+							title: "Async Validation",
+							linkOptions: linkOptions({
+								to: "/orgs/$slug/zodV4/async",
+								params: { slug },
+							}),
+						},
+						{
+							title: "Transforms",
+							linkOptions: linkOptions({
+								to: "/orgs/$slug/zodV4/transform",
+								params: { slug },
+							}),
+						},
+					],
 				},
 			];
 	return {

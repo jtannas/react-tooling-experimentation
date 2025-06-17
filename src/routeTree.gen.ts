@@ -16,15 +16,22 @@ import { Route as OrgsIndexImport } from './routes/orgs/index'
 import { Route as OrgsSlugRouteImport } from './routes/orgs/$slug/route'
 import { Route as OrgsSlugIndexImport } from './routes/orgs/$slug/index'
 import { Route as OrgsSlugLandingImport } from './routes/orgs/$slug/landing'
+import { Route as OrgsSlugZodV4RouteImport } from './routes/orgs/$slug/zodV4/route'
 import { Route as OrgsSlugStoresRouteImport } from './routes/orgs/$slug/stores/route'
+import { Route as OrgsSlugZodV4IndexImport } from './routes/orgs/$slug/zodV4/index'
 import { Route as OrgsSlugTablesIndexImport } from './routes/orgs/$slug/tables/index'
 import { Route as OrgsSlugStoresIndexImport } from './routes/orgs/$slug/stores/index'
 import { Route as OrgsSlugQueryIndexImport } from './routes/orgs/$slug/query/index'
 import { Route as OrgsSlugFormsIndexImport } from './routes/orgs/$slug/forms/index'
+import { Route as OrgsSlugZodV4TransformImport } from './routes/orgs/$slug/zodV4/transform'
+import { Route as OrgsSlugZodV4SearchImport } from './routes/orgs/$slug/zodV4/search'
+import { Route as OrgsSlugZodV4BasicImport } from './routes/orgs/$slug/zodV4/basic'
+import { Route as OrgsSlugZodV4AsyncImport } from './routes/orgs/$slug/zodV4/async'
 import { Route as OrgsSlugStoresZustandImport } from './routes/orgs/$slug/stores/zustand'
 import { Route as OrgsSlugStoresTanstackImport } from './routes/orgs/$slug/stores/tanstack'
 import { Route as OrgsSlugQueryParseImport } from './routes/orgs/$slug/query/parse'
 import { Route as OrgsSlugQueryInfiniteImport } from './routes/orgs/$slug/query/infinite'
+import { Route as OrgsSlugZodV4PathFooImport } from './routes/orgs/$slug/zodV4/path.$foo'
 
 // Create/Update Routes
 
@@ -58,10 +65,22 @@ const OrgsSlugLandingRoute = OrgsSlugLandingImport.update({
   getParentRoute: () => OrgsSlugRouteRoute,
 } as any)
 
+const OrgsSlugZodV4RouteRoute = OrgsSlugZodV4RouteImport.update({
+  id: '/zodV4',
+  path: '/zodV4',
+  getParentRoute: () => OrgsSlugRouteRoute,
+} as any)
+
 const OrgsSlugStoresRouteRoute = OrgsSlugStoresRouteImport.update({
   id: '/stores',
   path: '/stores',
   getParentRoute: () => OrgsSlugRouteRoute,
+} as any)
+
+const OrgsSlugZodV4IndexRoute = OrgsSlugZodV4IndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OrgsSlugZodV4RouteRoute,
 } as any)
 
 const OrgsSlugTablesIndexRoute = OrgsSlugTablesIndexImport.update({
@@ -88,6 +107,30 @@ const OrgsSlugFormsIndexRoute = OrgsSlugFormsIndexImport.update({
   getParentRoute: () => OrgsSlugRouteRoute,
 } as any)
 
+const OrgsSlugZodV4TransformRoute = OrgsSlugZodV4TransformImport.update({
+  id: '/transform',
+  path: '/transform',
+  getParentRoute: () => OrgsSlugZodV4RouteRoute,
+} as any)
+
+const OrgsSlugZodV4SearchRoute = OrgsSlugZodV4SearchImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => OrgsSlugZodV4RouteRoute,
+} as any)
+
+const OrgsSlugZodV4BasicRoute = OrgsSlugZodV4BasicImport.update({
+  id: '/basic',
+  path: '/basic',
+  getParentRoute: () => OrgsSlugZodV4RouteRoute,
+} as any)
+
+const OrgsSlugZodV4AsyncRoute = OrgsSlugZodV4AsyncImport.update({
+  id: '/async',
+  path: '/async',
+  getParentRoute: () => OrgsSlugZodV4RouteRoute,
+} as any)
+
 const OrgsSlugStoresZustandRoute = OrgsSlugStoresZustandImport.update({
   id: '/zustand',
   path: '/zustand',
@@ -110,6 +153,12 @@ const OrgsSlugQueryInfiniteRoute = OrgsSlugQueryInfiniteImport.update({
   id: '/query/infinite',
   path: '/query/infinite',
   getParentRoute: () => OrgsSlugRouteRoute,
+} as any)
+
+const OrgsSlugZodV4PathFooRoute = OrgsSlugZodV4PathFooImport.update({
+  id: '/path/$foo',
+  path: '/path/$foo',
+  getParentRoute: () => OrgsSlugZodV4RouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -142,6 +191,13 @@ declare module '@tanstack/react-router' {
       path: '/stores'
       fullPath: '/orgs/$slug/stores'
       preLoaderRoute: typeof OrgsSlugStoresRouteImport
+      parentRoute: typeof OrgsSlugRouteImport
+    }
+    '/orgs/$slug/zodV4': {
+      id: '/orgs/$slug/zodV4'
+      path: '/zodV4'
+      fullPath: '/orgs/$slug/zodV4'
+      preLoaderRoute: typeof OrgsSlugZodV4RouteImport
       parentRoute: typeof OrgsSlugRouteImport
     }
     '/orgs/$slug/landing': {
@@ -186,6 +242,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrgsSlugStoresZustandImport
       parentRoute: typeof OrgsSlugStoresRouteImport
     }
+    '/orgs/$slug/zodV4/async': {
+      id: '/orgs/$slug/zodV4/async'
+      path: '/async'
+      fullPath: '/orgs/$slug/zodV4/async'
+      preLoaderRoute: typeof OrgsSlugZodV4AsyncImport
+      parentRoute: typeof OrgsSlugZodV4RouteImport
+    }
+    '/orgs/$slug/zodV4/basic': {
+      id: '/orgs/$slug/zodV4/basic'
+      path: '/basic'
+      fullPath: '/orgs/$slug/zodV4/basic'
+      preLoaderRoute: typeof OrgsSlugZodV4BasicImport
+      parentRoute: typeof OrgsSlugZodV4RouteImport
+    }
+    '/orgs/$slug/zodV4/search': {
+      id: '/orgs/$slug/zodV4/search'
+      path: '/search'
+      fullPath: '/orgs/$slug/zodV4/search'
+      preLoaderRoute: typeof OrgsSlugZodV4SearchImport
+      parentRoute: typeof OrgsSlugZodV4RouteImport
+    }
+    '/orgs/$slug/zodV4/transform': {
+      id: '/orgs/$slug/zodV4/transform'
+      path: '/transform'
+      fullPath: '/orgs/$slug/zodV4/transform'
+      preLoaderRoute: typeof OrgsSlugZodV4TransformImport
+      parentRoute: typeof OrgsSlugZodV4RouteImport
+    }
     '/orgs/$slug/forms/': {
       id: '/orgs/$slug/forms/'
       path: '/forms'
@@ -214,6 +298,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrgsSlugTablesIndexImport
       parentRoute: typeof OrgsSlugRouteImport
     }
+    '/orgs/$slug/zodV4/': {
+      id: '/orgs/$slug/zodV4/'
+      path: '/'
+      fullPath: '/orgs/$slug/zodV4/'
+      preLoaderRoute: typeof OrgsSlugZodV4IndexImport
+      parentRoute: typeof OrgsSlugZodV4RouteImport
+    }
+    '/orgs/$slug/zodV4/path/$foo': {
+      id: '/orgs/$slug/zodV4/path/$foo'
+      path: '/path/$foo'
+      fullPath: '/orgs/$slug/zodV4/path/$foo'
+      preLoaderRoute: typeof OrgsSlugZodV4PathFooImport
+      parentRoute: typeof OrgsSlugZodV4RouteImport
+    }
   }
 }
 
@@ -234,8 +332,30 @@ const OrgsSlugStoresRouteRouteChildren: OrgsSlugStoresRouteRouteChildren = {
 const OrgsSlugStoresRouteRouteWithChildren =
   OrgsSlugStoresRouteRoute._addFileChildren(OrgsSlugStoresRouteRouteChildren)
 
+interface OrgsSlugZodV4RouteRouteChildren {
+  OrgsSlugZodV4AsyncRoute: typeof OrgsSlugZodV4AsyncRoute
+  OrgsSlugZodV4BasicRoute: typeof OrgsSlugZodV4BasicRoute
+  OrgsSlugZodV4SearchRoute: typeof OrgsSlugZodV4SearchRoute
+  OrgsSlugZodV4TransformRoute: typeof OrgsSlugZodV4TransformRoute
+  OrgsSlugZodV4IndexRoute: typeof OrgsSlugZodV4IndexRoute
+  OrgsSlugZodV4PathFooRoute: typeof OrgsSlugZodV4PathFooRoute
+}
+
+const OrgsSlugZodV4RouteRouteChildren: OrgsSlugZodV4RouteRouteChildren = {
+  OrgsSlugZodV4AsyncRoute: OrgsSlugZodV4AsyncRoute,
+  OrgsSlugZodV4BasicRoute: OrgsSlugZodV4BasicRoute,
+  OrgsSlugZodV4SearchRoute: OrgsSlugZodV4SearchRoute,
+  OrgsSlugZodV4TransformRoute: OrgsSlugZodV4TransformRoute,
+  OrgsSlugZodV4IndexRoute: OrgsSlugZodV4IndexRoute,
+  OrgsSlugZodV4PathFooRoute: OrgsSlugZodV4PathFooRoute,
+}
+
+const OrgsSlugZodV4RouteRouteWithChildren =
+  OrgsSlugZodV4RouteRoute._addFileChildren(OrgsSlugZodV4RouteRouteChildren)
+
 interface OrgsSlugRouteRouteChildren {
   OrgsSlugStoresRouteRoute: typeof OrgsSlugStoresRouteRouteWithChildren
+  OrgsSlugZodV4RouteRoute: typeof OrgsSlugZodV4RouteRouteWithChildren
   OrgsSlugLandingRoute: typeof OrgsSlugLandingRoute
   OrgsSlugIndexRoute: typeof OrgsSlugIndexRoute
   OrgsSlugQueryInfiniteRoute: typeof OrgsSlugQueryInfiniteRoute
@@ -247,6 +367,7 @@ interface OrgsSlugRouteRouteChildren {
 
 const OrgsSlugRouteRouteChildren: OrgsSlugRouteRouteChildren = {
   OrgsSlugStoresRouteRoute: OrgsSlugStoresRouteRouteWithChildren,
+  OrgsSlugZodV4RouteRoute: OrgsSlugZodV4RouteRouteWithChildren,
   OrgsSlugLandingRoute: OrgsSlugLandingRoute,
   OrgsSlugIndexRoute: OrgsSlugIndexRoute,
   OrgsSlugQueryInfiniteRoute: OrgsSlugQueryInfiniteRoute,
@@ -265,16 +386,23 @@ export interface FileRoutesByFullPath {
   '/orgs/$slug': typeof OrgsSlugRouteRouteWithChildren
   '/orgs': typeof OrgsIndexRoute
   '/orgs/$slug/stores': typeof OrgsSlugStoresRouteRouteWithChildren
+  '/orgs/$slug/zodV4': typeof OrgsSlugZodV4RouteRouteWithChildren
   '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
   '/orgs/$slug/': typeof OrgsSlugIndexRoute
   '/orgs/$slug/query/infinite': typeof OrgsSlugQueryInfiniteRoute
   '/orgs/$slug/query/parse': typeof OrgsSlugQueryParseRoute
   '/orgs/$slug/stores/tanstack': typeof OrgsSlugStoresTanstackRoute
   '/orgs/$slug/stores/zustand': typeof OrgsSlugStoresZustandRoute
+  '/orgs/$slug/zodV4/async': typeof OrgsSlugZodV4AsyncRoute
+  '/orgs/$slug/zodV4/basic': typeof OrgsSlugZodV4BasicRoute
+  '/orgs/$slug/zodV4/search': typeof OrgsSlugZodV4SearchRoute
+  '/orgs/$slug/zodV4/transform': typeof OrgsSlugZodV4TransformRoute
   '/orgs/$slug/forms': typeof OrgsSlugFormsIndexRoute
   '/orgs/$slug/query': typeof OrgsSlugQueryIndexRoute
   '/orgs/$slug/stores/': typeof OrgsSlugStoresIndexRoute
   '/orgs/$slug/tables': typeof OrgsSlugTablesIndexRoute
+  '/orgs/$slug/zodV4/': typeof OrgsSlugZodV4IndexRoute
+  '/orgs/$slug/zodV4/path/$foo': typeof OrgsSlugZodV4PathFooRoute
 }
 
 export interface FileRoutesByTo {
@@ -286,10 +414,16 @@ export interface FileRoutesByTo {
   '/orgs/$slug/query/parse': typeof OrgsSlugQueryParseRoute
   '/orgs/$slug/stores/tanstack': typeof OrgsSlugStoresTanstackRoute
   '/orgs/$slug/stores/zustand': typeof OrgsSlugStoresZustandRoute
+  '/orgs/$slug/zodV4/async': typeof OrgsSlugZodV4AsyncRoute
+  '/orgs/$slug/zodV4/basic': typeof OrgsSlugZodV4BasicRoute
+  '/orgs/$slug/zodV4/search': typeof OrgsSlugZodV4SearchRoute
+  '/orgs/$slug/zodV4/transform': typeof OrgsSlugZodV4TransformRoute
   '/orgs/$slug/forms': typeof OrgsSlugFormsIndexRoute
   '/orgs/$slug/query': typeof OrgsSlugQueryIndexRoute
   '/orgs/$slug/stores': typeof OrgsSlugStoresIndexRoute
   '/orgs/$slug/tables': typeof OrgsSlugTablesIndexRoute
+  '/orgs/$slug/zodV4': typeof OrgsSlugZodV4IndexRoute
+  '/orgs/$slug/zodV4/path/$foo': typeof OrgsSlugZodV4PathFooRoute
 }
 
 export interface FileRoutesById {
@@ -298,16 +432,23 @@ export interface FileRoutesById {
   '/orgs/$slug': typeof OrgsSlugRouteRouteWithChildren
   '/orgs/': typeof OrgsIndexRoute
   '/orgs/$slug/stores': typeof OrgsSlugStoresRouteRouteWithChildren
+  '/orgs/$slug/zodV4': typeof OrgsSlugZodV4RouteRouteWithChildren
   '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
   '/orgs/$slug/': typeof OrgsSlugIndexRoute
   '/orgs/$slug/query/infinite': typeof OrgsSlugQueryInfiniteRoute
   '/orgs/$slug/query/parse': typeof OrgsSlugQueryParseRoute
   '/orgs/$slug/stores/tanstack': typeof OrgsSlugStoresTanstackRoute
   '/orgs/$slug/stores/zustand': typeof OrgsSlugStoresZustandRoute
+  '/orgs/$slug/zodV4/async': typeof OrgsSlugZodV4AsyncRoute
+  '/orgs/$slug/zodV4/basic': typeof OrgsSlugZodV4BasicRoute
+  '/orgs/$slug/zodV4/search': typeof OrgsSlugZodV4SearchRoute
+  '/orgs/$slug/zodV4/transform': typeof OrgsSlugZodV4TransformRoute
   '/orgs/$slug/forms/': typeof OrgsSlugFormsIndexRoute
   '/orgs/$slug/query/': typeof OrgsSlugQueryIndexRoute
   '/orgs/$slug/stores/': typeof OrgsSlugStoresIndexRoute
   '/orgs/$slug/tables/': typeof OrgsSlugTablesIndexRoute
+  '/orgs/$slug/zodV4/': typeof OrgsSlugZodV4IndexRoute
+  '/orgs/$slug/zodV4/path/$foo': typeof OrgsSlugZodV4PathFooRoute
 }
 
 export interface FileRouteTypes {
@@ -317,16 +458,23 @@ export interface FileRouteTypes {
     | '/orgs/$slug'
     | '/orgs'
     | '/orgs/$slug/stores'
+    | '/orgs/$slug/zodV4'
     | '/orgs/$slug/landing'
     | '/orgs/$slug/'
     | '/orgs/$slug/query/infinite'
     | '/orgs/$slug/query/parse'
     | '/orgs/$slug/stores/tanstack'
     | '/orgs/$slug/stores/zustand'
+    | '/orgs/$slug/zodV4/async'
+    | '/orgs/$slug/zodV4/basic'
+    | '/orgs/$slug/zodV4/search'
+    | '/orgs/$slug/zodV4/transform'
     | '/orgs/$slug/forms'
     | '/orgs/$slug/query'
     | '/orgs/$slug/stores/'
     | '/orgs/$slug/tables'
+    | '/orgs/$slug/zodV4/'
+    | '/orgs/$slug/zodV4/path/$foo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -337,26 +485,39 @@ export interface FileRouteTypes {
     | '/orgs/$slug/query/parse'
     | '/orgs/$slug/stores/tanstack'
     | '/orgs/$slug/stores/zustand'
+    | '/orgs/$slug/zodV4/async'
+    | '/orgs/$slug/zodV4/basic'
+    | '/orgs/$slug/zodV4/search'
+    | '/orgs/$slug/zodV4/transform'
     | '/orgs/$slug/forms'
     | '/orgs/$slug/query'
     | '/orgs/$slug/stores'
     | '/orgs/$slug/tables'
+    | '/orgs/$slug/zodV4'
+    | '/orgs/$slug/zodV4/path/$foo'
   id:
     | '__root__'
     | '/'
     | '/orgs/$slug'
     | '/orgs/'
     | '/orgs/$slug/stores'
+    | '/orgs/$slug/zodV4'
     | '/orgs/$slug/landing'
     | '/orgs/$slug/'
     | '/orgs/$slug/query/infinite'
     | '/orgs/$slug/query/parse'
     | '/orgs/$slug/stores/tanstack'
     | '/orgs/$slug/stores/zustand'
+    | '/orgs/$slug/zodV4/async'
+    | '/orgs/$slug/zodV4/basic'
+    | '/orgs/$slug/zodV4/search'
+    | '/orgs/$slug/zodV4/transform'
     | '/orgs/$slug/forms/'
     | '/orgs/$slug/query/'
     | '/orgs/$slug/stores/'
     | '/orgs/$slug/tables/'
+    | '/orgs/$slug/zodV4/'
+    | '/orgs/$slug/zodV4/path/$foo'
   fileRoutesById: FileRoutesById
 }
 
@@ -394,6 +555,7 @@ export const routeTree = rootRoute
       "filePath": "orgs/$slug/route.tsx",
       "children": [
         "/orgs/$slug/stores",
+        "/orgs/$slug/zodV4",
         "/orgs/$slug/landing",
         "/orgs/$slug/",
         "/orgs/$slug/query/infinite",
@@ -413,6 +575,18 @@ export const routeTree = rootRoute
         "/orgs/$slug/stores/tanstack",
         "/orgs/$slug/stores/zustand",
         "/orgs/$slug/stores/"
+      ]
+    },
+    "/orgs/$slug/zodV4": {
+      "filePath": "orgs/$slug/zodV4/route.tsx",
+      "parent": "/orgs/$slug",
+      "children": [
+        "/orgs/$slug/zodV4/async",
+        "/orgs/$slug/zodV4/basic",
+        "/orgs/$slug/zodV4/search",
+        "/orgs/$slug/zodV4/transform",
+        "/orgs/$slug/zodV4/",
+        "/orgs/$slug/zodV4/path/$foo"
       ]
     },
     "/orgs/$slug/landing": {
@@ -439,6 +613,22 @@ export const routeTree = rootRoute
       "filePath": "orgs/$slug/stores/zustand.tsx",
       "parent": "/orgs/$slug/stores"
     },
+    "/orgs/$slug/zodV4/async": {
+      "filePath": "orgs/$slug/zodV4/async.tsx",
+      "parent": "/orgs/$slug/zodV4"
+    },
+    "/orgs/$slug/zodV4/basic": {
+      "filePath": "orgs/$slug/zodV4/basic.tsx",
+      "parent": "/orgs/$slug/zodV4"
+    },
+    "/orgs/$slug/zodV4/search": {
+      "filePath": "orgs/$slug/zodV4/search.tsx",
+      "parent": "/orgs/$slug/zodV4"
+    },
+    "/orgs/$slug/zodV4/transform": {
+      "filePath": "orgs/$slug/zodV4/transform.tsx",
+      "parent": "/orgs/$slug/zodV4"
+    },
     "/orgs/$slug/forms/": {
       "filePath": "orgs/$slug/forms/index.tsx",
       "parent": "/orgs/$slug"
@@ -454,6 +644,14 @@ export const routeTree = rootRoute
     "/orgs/$slug/tables/": {
       "filePath": "orgs/$slug/tables/index.tsx",
       "parent": "/orgs/$slug"
+    },
+    "/orgs/$slug/zodV4/": {
+      "filePath": "orgs/$slug/zodV4/index.tsx",
+      "parent": "/orgs/$slug/zodV4"
+    },
+    "/orgs/$slug/zodV4/path/$foo": {
+      "filePath": "orgs/$slug/zodV4/path.$foo.tsx",
+      "parent": "/orgs/$slug/zodV4"
     }
   }
 }

@@ -12,14 +12,15 @@ function RouteComponent() {
 				<LinkButton to="./zustand" from={Route.fullPath} variant="link">
 					Zustand
 				</LinkButton>
-				A well known and reliable data store that uses reducer-style
-				updaters bundled directly into the store.
+				A well known and reliable data store that uses reducer-style updaters
+				bundled directly into the store.
 			</li>
 			<li>
 				<LinkButton to="./tanstack" from={Route.fullPath} variant="link">
 					Tanstack Store
 				</LinkButton>
-				A work-in-progress data store that puts type safety first. It uses updater functions but they are not bundled into the store. Promising.
+				A work-in-progress data store that puts type safety first. It uses
+				updater functions but they are not bundled into the store. Promising.
 			</li>
 		</ul>
 	);
