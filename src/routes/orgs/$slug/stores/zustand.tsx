@@ -3,7 +3,11 @@ import { create } from "zustand";
 import { Button } from "~/components/ui/button";
 
 export const Route = createFileRoute("/orgs/$slug/stores/zustand")({
-	staticData: { title: "Zustand" },
+	staticData: {
+		title: "Zustand",
+		description:
+			"A well known and reliable data store that uses reducer-style updaters bundled directly into the store.",
+	},
 	component: RouteComponent,
 });
 

@@ -1,5 +1,5 @@
 import { OrganizationSwitcher } from "@clerk/clerk-react";
-import { isMatch, Link, useLocation, useMatches } from "@tanstack/react-router";
+import { Link, useLocation, useMatches } from "@tanstack/react-router";
 import { SidebarIcon } from "lucide-react";
 
 import {
@@ -20,9 +20,7 @@ export function SiteHeader() {
 	const matches = useMatches();
 	if (matches.some((match) => match.status === "pending")) return null;
 
-	const matchesWithCrumbs = matches.filter((match) =>
-		isMatch(match, "staticData.title"),
-	);
+	const matchesWithCrumbs = matches.filter((match) => match.staticData.title);
 
 	return (
 		<header className="bg-background sticky top-0 z-50 flex w-full items-center border-b">
@@ -51,15 +49,11 @@ export function SiteHeader() {
 								<BreadcrumbItem key={match.pathname}>
 									{match.pathname !== pathname && (
 										<BreadcrumbLink asChild>
-											<Link to={match.pathname}>
-												{match.staticData.title}
-											</Link>
+											<Link to={match.pathname}>{match.staticData.title}</Link>
 										</BreadcrumbLink>
 									)}
 									{match.pathname === pathname && (
-										<BreadcrumbPage>
-											{match.staticData.title}
-										</BreadcrumbPage>
+										<BreadcrumbPage>{match.staticData.title}</BreadcrumbPage>
 									)}
 								</BreadcrumbItem>
 							</>

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/orgs/$slug/zodV4/basic")({
 });
 
 const Player = z.object({
-	username: z.string().min(5).endsWith('e'),
+	username: z.string().min(5).endsWith("e"),
 	xp: z.number().positive(),
 });
 
@@ -49,7 +49,9 @@ function RouteComponent() {
 						{z
 							.prettifyError(player.error)
 							.split(/\n/)
-							.map((error) => <li key={error}>{error}</li>)}
+							.map((error) => (
+								<li key={error}>{error}</li>
+							))}
 					</ul>
 				</p>
 			)}
