@@ -29,6 +29,7 @@
     "@tanstack/react-router-devtools": "^1.114.3",
     "@tanstack/react-store": "^0.7.1",
     "@tanstack/router-plugin": "^1.114.3",
+    "biome": "^0.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.514.0",
@@ -41,7 +42,7 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.0-beta.6",
+    "@biomejs/biome": "^2.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.8",
