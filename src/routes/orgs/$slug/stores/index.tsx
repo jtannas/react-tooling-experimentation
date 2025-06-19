@@ -1,27 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { LinkButton } from "~/components/link-button";
 
 export const Route = createFileRoute("/orgs/$slug/stores/")({
 	component: RouteComponent,
+	staticData: { linkTitle: "Data Stores" }
 });
 
 function RouteComponent() {
+	const { flatRoutes } = useRouter()
+	const children = flatRoutes.filter(r => r.fullPath !== Route.fullPath && r.fullPath.startsWith(Route.fullPath))
+	children.sort((a,b) => a.options.staticData?.linkTitle?.localeCompare(b.options.staticData?.linkTitle ?? '') || 0)
+
 	return (
 		<ul>
-			<li>
-				<LinkButton to="./zustand" from={Route.fullPath} variant="link">
-					Zustand
-				</LinkButton>
-				A well known and reliable data store that uses reducer-style updaters
-				bundled directly into the store.
-			</li>
-			<li>
-				<LinkButton to="./tanstack" from={Route.fullPath} variant="link">
-					Tanstack Store
-				</LinkButton>
-				A work-in-progress data store that puts type safety first. It uses
-				updater functions but they are not bundled into the store. Promising.
-			</li>
+			{children.map((r) => (
+				<li key={r.id}>
+					<LinkButton to={r.fullPath} variant="link">{r.options.staticData?.linkTitle}</LinkButton>{r.options.staticData?.linkDescription}
+				</li>
+			))}
 		</ul>
 	);
 }

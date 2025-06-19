@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/orgs/$slug/query/infinite")({
-	staticData: { title: "Infinite Query" },
+	staticData: { linkTitle: "Infinite Query", linkDescription: "Demo of using an infinite query" },
 	component: RouteComponent,
 });
 

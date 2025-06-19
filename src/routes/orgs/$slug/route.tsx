@@ -8,7 +8,7 @@ import { useLayoutEffect } from "react";
 import { OrgContext } from "~/integrations/clerk/useAppOrg";
 
 export const Route = createFileRoute("/orgs/$slug")({
-	staticData: { title: "Home" },
+	staticData: { linkTitle: "Home", linkDescription: "Organization Home Page" },
 	component: RouteComponent,
 });
 

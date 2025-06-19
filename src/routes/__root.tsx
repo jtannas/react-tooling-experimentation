@@ -22,7 +22,7 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	staticData: {},
+	staticData: { linkTitle: null },
 	component: () => (
 		<ClerkProvider>
 			<ClerkLoading>

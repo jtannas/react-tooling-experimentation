@@ -36,8 +36,8 @@ declare module "@tanstack/react-router" {
 		router: typeof router;
 	}
 	interface StaticDataRouteOption {
-		title?: string;
-		description?: string;
+		linkTitle: string | null
+		linkDescription?: string
 	}
 }
 

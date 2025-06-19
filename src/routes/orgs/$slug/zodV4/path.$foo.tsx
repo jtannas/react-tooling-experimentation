@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/orgs/$slug/zodV4/path/$foo")({
 	component: RouteComponent,
-	staticData: { title: "Path Params" },
+	staticData: { linkTitle: "Path Params", linkDescription: "Validating Path Parameters" },
 });
 
 function RouteComponent() {

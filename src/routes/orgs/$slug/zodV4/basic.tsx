@@ -6,7 +6,7 @@ import { Label } from "~/components/ui/label";
 
 export const Route = createFileRoute("/orgs/$slug/zodV4/basic")({
 	component: RouteComponent,
-	staticData: { title: "Basic" },
+	staticData: { linkTitle: "Basic", linkDescription: "Demo of basic validation" },
 });
 
 const Player = z.object({

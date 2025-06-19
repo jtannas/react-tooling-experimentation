@@ -5,8 +5,8 @@ import { Button } from "~/components/ui/button";
 
 export const Route = createFileRoute("/orgs/$slug/stores/tanstack")({
 	staticData: {
-		title: "Tanstack",
-		description:
+		linkTitle: "Tanstack",
+		linkDescription:
 			"A work-in-progress data store that puts type safety first. It uses updater functions but they are not bundled into the store. Promising.",
 	},
 	component: RouteComponent,
