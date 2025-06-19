@@ -3,6 +3,7 @@
 import {
 	Link,
 	type RegisteredRouter,
+	useRouter,
 	type ValidateLinkOptions,
 } from "@tanstack/react-router";
 import { ChevronRight, type LucideIcon } from "lucide-react";
@@ -37,6 +38,9 @@ export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 		items?: LinkConfig<TRouter, TOptions>[];
 	})[];
 }) {
+	const { flatRoutes } = useRouter()
+	const zodRoutes = flatRoutes.filter(r => r.fullPath.includes('zodV4/') && r.options.staticData.linkTitle)
+
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -74,6 +78,17 @@ export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 									</CollapsibleContent>
 								</>
 							) : null}
+						</SidebarMenuItem>
+					</Collapsible>
+				))}
+				{zodRoutes.map((r) => (
+					<Collapsible key={r.id} asChild defaultOpen>
+						<SidebarMenuItem>
+							<SidebarMenuButton asChild tooltip={r.options.staticData.linkTitle || 'Zod Example'}>
+								<Link to={r.fullPath}>
+									<span>{r.options.staticData.linkTitle}</span>
+								</Link>
+							</SidebarMenuButton>
 						</SidebarMenuItem>
 					</Collapsible>
 				))}
