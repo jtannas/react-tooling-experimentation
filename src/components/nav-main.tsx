@@ -38,8 +38,10 @@ export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 		items?: LinkConfig<TRouter, TOptions>[];
 	})[];
 }) {
-	const { flatRoutes } = useRouter()
-	const zodRoutes = flatRoutes.filter(r => r.fullPath.includes('zodV4/') && r.options.staticData.linkTitle)
+	const { flatRoutes } = useRouter();
+	const zodRoutes = flatRoutes.filter(
+		(r) => r.fullPath.includes("zodV4/") && r.options.staticData.linkTitle,
+	);
 
 	return (
 		<SidebarGroup>
@@ -84,7 +86,10 @@ export function NavMain<TRouter extends RegisteredRouter, TOptions>({
 				{zodRoutes.map((r) => (
 					<Collapsible key={r.id} asChild defaultOpen>
 						<SidebarMenuItem>
-							<SidebarMenuButton asChild tooltip={r.options.staticData.linkTitle || 'Zod Example'}>
+							<SidebarMenuButton
+								asChild
+								tooltip={r.options.staticData.linkTitle || "Zod Example"}
+							>
 								<Link to={r.fullPath}>
 									<span>{r.options.staticData.linkTitle}</span>
 								</Link>

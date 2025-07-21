@@ -20,7 +20,9 @@ export function SiteHeader() {
 	const matches = useMatches();
 	if (matches.some((match) => match.status === "pending")) return null;
 
-	const matchesWithCrumbs = matches.filter((match) => match.staticData.linkTitle);
+	const matchesWithCrumbs = matches.filter(
+		(match) => match.staticData.linkTitle,
+	);
 
 	return (
 		<header className="bg-background sticky top-0 z-50 flex w-full items-center border-b">
@@ -49,11 +51,15 @@ export function SiteHeader() {
 								<BreadcrumbItem key={match.pathname}>
 									{match.pathname !== pathname && (
 										<BreadcrumbLink asChild>
-											<Link to={match.pathname}>{match.staticData.linkTitle}</Link>
+											<Link to={match.pathname}>
+												{match.staticData.linkTitle}
+											</Link>
 										</BreadcrumbLink>
 									)}
 									{match.pathname === pathname && (
-										<BreadcrumbPage>{match.staticData.linkTitle}</BreadcrumbPage>
+										<BreadcrumbPage>
+											{match.staticData.linkTitle}
+										</BreadcrumbPage>
 									)}
 								</BreadcrumbItem>
 							</>

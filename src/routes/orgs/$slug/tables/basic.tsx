@@ -1,10 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/orgs/$slug/tables/basic')({
-  component: RouteComponent,
-  staticData: { linkTitle: "Basic Table", linkDescription: "A simple data table" }
-})
+export const Route = createFileRoute("/orgs/$slug/tables/basic")({
+	component: RouteComponent,
+	staticData: {
+		linkTitle: "Basic Table",
+		linkDescription: "A simple data table",
+	},
+});
 
 function RouteComponent() {
-  return <div>Hello "/orgs/$slug/tables/basic"!</div>
+	return <div>Hello "/orgs/$slug/tables/basic"!</div>;
 }
