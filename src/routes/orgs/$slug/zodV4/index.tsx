@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ChildrenIndex } from "~/components/children-index";
+import { DescendantsIndex } from "~/components/descendants-index";
 
 export const Route = createFileRoute("/orgs/$slug/zodV4/")({
-	component: ChildrenIndex,
+	component: DescendantsIndex,
 	staticData: { linkTitle: "Zod V4" },
 });

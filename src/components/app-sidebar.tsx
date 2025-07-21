@@ -1,5 +1,5 @@
 import { UserButton, useOrganization } from "@clerk/clerk-react";
-import { linkOptions } from "@tanstack/react-router";
+import { linkOptions, useRouter } from "@tanstack/react-router";
 import {
 	Command,
 	FormInput,
@@ -16,7 +16,6 @@ import {
 	Vault,
 } from "lucide-react";
 import type * as React from "react";
-import { useMemo } from "react";
 import { NavMain } from "~/components/nav-main";
 import { NavProjects } from "~/components/nav-projects";
 import { NavSecondary } from "~/components/nav-secondary";
@@ -29,7 +28,13 @@ import {
 	SidebarMenuItem,
 } from "~/components/ui/sidebar";
 
-const navConfig = (slug: string | undefined | null) => {
+const useNavConfig = (slug: string | undefined | null) => {
+	const { flatRoutes } = useRouter();
+	const zodChildRegExp = /zodV4\/.+/;
+	const zodChildren = flatRoutes.filter(
+		(r) => zodChildRegExp.test(r.fullPath) && r.options.staticData.linkTitle,
+	);
+
 	const organizationLinks = !slug
 		? []
 		: [
@@ -117,43 +122,14 @@ const navConfig = (slug: string | undefined | null) => {
 						to: "/orgs/$slug/zodV4",
 						params: { slug },
 					}),
-					items: [
-						{
-							title: "Basic",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/zodV4/basic",
-								params: { slug },
-							}),
-						},
-						{
-							title: "Path Params",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/zodV4/path/$foo",
-								params: { slug, foo: "abc" },
-							}),
-						},
-						{
-							title: "Search Params",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/zodV4/search",
-								params: { slug },
-							}),
-						},
-						{
-							title: "Async Validation",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/zodV4/async",
-								params: { slug },
-							}),
-						},
-						{
-							title: "Transforms",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/zodV4/transform",
-								params: { slug },
-							}),
-						},
-					],
+					items: zodChildren.map((zc) => ({
+						title: zc.options.staticData.linkTitle,
+						linkOptions: linkOptions({
+							to: zc.fullPath,
+							// @ts-expect-error TODO: figure out how to find the zod routes in a type-safe way so `slug` is accepted
+							params: { slug },
+						}),
+					})),
 				},
 			];
 	return {
@@ -193,7 +169,7 @@ const navConfig = (slug: string | undefined | null) => {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { organization } = useOrganization();
 	const { slug } = organization ?? {};
-	const data = useMemo(() => navConfig(slug), [slug]);
+	const data = useNavConfig(slug);
 
 	return (
 		<Sidebar
@@ -212,6 +188,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</div>
 			</SidebarHeader>
 			<SidebarContent>
+				{/* @ts-expect-error TODO: figure out how to find the zod routes in a type-safe way so `slug` is accepted*/}
 				<NavMain items={data.navMain} />
 				<NavProjects projects={data.projects} />
 				<NavSecondary items={data.navSecondary} className="mt-auto" />
