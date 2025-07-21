@@ -1,19 +1,8 @@
-import { useMatch, useRouter } from "@tanstack/react-router";
+import { useRouteChildren } from "~/hooks/use-route-children";
 import { LinkButton } from "./link-button";
 
 export function ChildrenIndex() {
-	const match = useMatch({ strict: false });
-	const { flatRoutes } = useRouter();
-	const children = flatRoutes.filter(
-		(r) =>
-			r.fullPath !== match.fullPath && r.fullPath.startsWith(match.fullPath),
-	);
-	children.sort(
-		(a, b) =>
-			a.options.staticData?.linkTitle?.localeCompare(
-				b.options.staticData?.linkTitle ?? "",
-			) || 0,
-	);
+	const children = useRouteChildren();
 
 	return (
 		<ul>
