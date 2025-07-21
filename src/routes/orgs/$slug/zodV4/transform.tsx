@@ -2,7 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/orgs/$slug/zodV4/transform")({
 	component: RouteComponent,
-	staticData: { linkTitle: "Transform" },
+	staticData: {
+		linkTitle: "Transform",
+		linkDescription: "Transforming valid results",
+	},
 });
 
 function RouteComponent() {
