@@ -28,7 +28,6 @@ const idToUser = z
 		return user;
 	});
 
-
 function RouteComponent() {
 	const [num, setNum] = useState(0);
 	const [user, setUser] = useState<
