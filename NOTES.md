@@ -38,7 +38,7 @@ Repo for testing out different React tools
   - [ ] container queries
   - [ ] transitions
   - [ ] transforms
-- [ ] React Compiler; https://react.dev/learn/react-compiler
+- [x] React Compiler; https://react.dev/learn/react-compiler
 - [ ] Recharts; https://recharts.org/en-US
 - [ ] React Three Fiber; https://github.com/pmndrs/react-three-fiber
 - [ ] React Loading Skeleton; https://github.com/dvtng/react-loading-skeleton
