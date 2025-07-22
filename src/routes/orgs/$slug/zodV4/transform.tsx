@@ -2,13 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import z from "zod/v4";
 import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 const idToUser = z
 	.number()
 	.gte(1)
-	.transform(async (id, ctx) => {
-		// fetch user from database
-		await new Promise((resolve) => setTimeout(resolve, 500));
+	.transform((id, ctx) => {
 		const user = id === 4 ? undefined : `User: ${id}`;
 		if (!user)
 			ctx.issues.push({
@@ -35,7 +34,7 @@ function RouteComponent() {
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			const zUser = await idToUser.safeParseAsync(num);
+			const zUser = await idToUser.safeParse(num);
 			setUser(zUser);
 		};
 		fetchUser();
@@ -43,6 +42,7 @@ function RouteComponent() {
 
 	return (
 		<div>
+			<Label>User Id</Label>
 			<Input
 				placeholder="XP"
 				type="number"
