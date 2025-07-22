@@ -1,5 +1,5 @@
 import { UserButton, useOrganization } from "@clerk/clerk-react";
-import { linkOptions, useRouter } from "@tanstack/react-router";
+import { type AnyRoute, linkOptions, useRouter } from "@tanstack/react-router";
 import {
 	Command,
 	FormInput,
@@ -28,12 +28,25 @@ import {
 	SidebarMenuItem,
 } from "~/components/ui/sidebar";
 
+function routeFinder({
+	flatRoutes,
+	regex,
+}: {
+	flatRoutes: AnyRoute[];
+	regex: RegExp;
+}) {
+	return flatRoutes
+		.filter((r) => regex.test(r.fullPath) && r.options.staticData.linkTitle)
+		.sort(
+			(a, b) =>
+				a.options.staticData.linkTitle?.localeCompare(
+					b.options.staticData.linkTitle ?? "",
+				) ?? 0,
+		);
+}
+
 const useNavConfig = (slug: string | undefined | null) => {
 	const { flatRoutes } = useRouter();
-	const zodChildRegExp = /zodV4\/.+/;
-	const zodChildren = flatRoutes.filter(
-		(r) => zodChildRegExp.test(r.fullPath) && r.options.staticData.linkTitle,
-	);
 
 	const organizationLinks = !slug
 		? []
@@ -58,22 +71,13 @@ const useNavConfig = (slug: string | undefined | null) => {
 						to: "/orgs/$slug/query",
 						params: { slug },
 					}),
-					items: [
-						{
-							title: "Infinite Queries",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/query/infinite",
-								params: { slug },
-							}),
-						},
-						{
-							title: "Parsing Data",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/query/parse",
-								params: { slug },
-							}),
-						},
-					],
+					items: routeFinder({
+						flatRoutes,
+						regex: /orgs\/\$slug\/query\/.+/,
+					}).map((r) => ({
+						title: r.options.staticData.linkTitle,
+						linkOptions: linkOptions({ to: r.to }),
+					})),
 				},
 				{
 					title: "Data Stores",
@@ -82,22 +86,13 @@ const useNavConfig = (slug: string | undefined | null) => {
 						to: "/orgs/$slug/stores",
 						params: { slug },
 					}),
-					items: [
-						{
-							title: "Tanstack Store",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/stores/tanstack",
-								params: { slug },
-							}),
-						},
-						{
-							title: "Zustand",
-							linkOptions: linkOptions({
-								to: "/orgs/$slug/stores/zustand",
-								params: { slug },
-							}),
-						},
-					],
+					items: routeFinder({
+						flatRoutes,
+						regex: /orgs\/\$slug\/stores\/.+/,
+					}).map((r) => ({
+						title: r.options.staticData.linkTitle,
+						linkOptions: linkOptions({ to: r.to }),
+					})),
 				},
 				{
 					title: "Tanstack Table",
@@ -106,6 +101,13 @@ const useNavConfig = (slug: string | undefined | null) => {
 						to: "/orgs/$slug/tables",
 						params: { slug },
 					}),
+					items: routeFinder({
+						flatRoutes,
+						regex: /orgs\/\$slug\/tables\/.+/,
+					}).map((r) => ({
+						title: r.options.staticData.linkTitle,
+						linkOptions: linkOptions({ to: r.to }),
+					})),
 				},
 				{
 					title: "Tanstack Form",
@@ -114,6 +116,13 @@ const useNavConfig = (slug: string | undefined | null) => {
 						to: "/orgs/$slug/forms",
 						params: { slug },
 					}),
+					items: routeFinder({
+						flatRoutes,
+						regex: /orgs\/\$slug\/forms\/.+/,
+					}).map((r) => ({
+						title: r.options.staticData.linkTitle,
+						linkOptions: linkOptions({ to: r.to }),
+					})),
 				},
 				{
 					title: "Zod",
@@ -122,13 +131,12 @@ const useNavConfig = (slug: string | undefined | null) => {
 						to: "/orgs/$slug/zodV4",
 						params: { slug },
 					}),
-					items: zodChildren.map((zc) => ({
-						title: zc.options.staticData.linkTitle,
-						linkOptions: linkOptions({
-							to: zc.fullPath,
-							// @ts-expect-error TODO: figure out how to find the zod routes in a type-safe way so `slug` is accepted
-							params: { slug },
-						}),
+					items: routeFinder({
+						flatRoutes,
+						regex: /orgs\/\$slug\/zodV4\/.+/,
+					}).map((r) => ({
+						title: r.options.staticData.linkTitle,
+						linkOptions: linkOptions({ to: r.to }),
 					})),
 				},
 			];
@@ -188,7 +196,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</div>
 			</SidebarHeader>
 			<SidebarContent>
-				{/* @ts-expect-error TODO: figure out how to find the zod routes in a type-safe way so `slug` is accepted*/}
 				<NavMain items={data.navMain} />
 				<NavProjects projects={data.projects} />
 				<NavSecondary items={data.navSecondary} className="mt-auto" />

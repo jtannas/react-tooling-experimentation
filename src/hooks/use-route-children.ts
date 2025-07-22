@@ -7,8 +7,6 @@ export function useRouteChildren() {
 	const directChildRegExp = new RegExp(
 		`^${escapeRegExp(match.fullPath)}[a-z\-]+$`,
 	);
-	console.log(flatRoutes.map((r) => r.fullPath));
-	console.log(match.fullPath);
 	const children = flatRoutes.filter((r) => directChildRegExp.test(r.fullPath));
 	children.sort(
 		(a, b) =>

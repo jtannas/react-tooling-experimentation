@@ -6,7 +6,7 @@ import {
 import { createFileRoute, useLayoutEffect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-	staticData: { linkTitle: null },
+	staticData: { linkTitle: "Root" },
 	component: RouteComponent,
 });
 
