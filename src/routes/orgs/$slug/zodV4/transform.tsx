@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import z, { type ZodSafeParseResult } from "zod/v4";
+import z from "zod/v4";
 import { Input } from "~/components/ui/input";
 
 const idToUser = z
@@ -9,7 +9,7 @@ const idToUser = z
 	.transform(async (id, ctx) => {
 		// fetch user from database
 		await new Promise((resolve) => setTimeout(resolve, 500));
-		const user = id === 4 ? undefined : `User: ${id}`
+		const user = id === 4 ? undefined : `User: ${id}`;
 		if (!user)
 			ctx.issues.push({
 				code: "custom",
@@ -29,7 +29,9 @@ export const Route = createFileRoute("/orgs/$slug/zodV4/transform")({
 
 function RouteComponent() {
 	const [num, setNum] = useState(0);
-	const [user, setUser] = useState<ZodSafeParseResult<string | undefined> | undefined>();
+	const [user, setUser] = useState<
+		ReturnType<(typeof idToUser)["safeParse"]> | undefined
+	>();
 
 	useEffect(() => {
 		const fetchUser = async () => {
