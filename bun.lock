@@ -20,7 +20,7 @@
         "@tanstack/react-router-devtools": "^1.114.3",
         "@tanstack/react-store": "^0.7.1",
         "@tanstack/router-plugin": "^1.114.3",
-        "babel-plugin-react-compiler": "^19.1.0-rc.2",
+        "@tanstack/zod-adapter": "^1.129.5",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "lucide-react": "^0.514.0",
@@ -39,6 +39,7 @@
         "@types/react": "^19.0.8",
         "@types/react-dom": "^19.0.3",
         "@vitejs/plugin-react": "^4.3.4",
+        "babel-plugin-react-compiler": "^19.1.0-rc.2",
         "jsdom": "^26.0.0",
         "typescript": "^5.7.2",
         "vite": "^6.1.0",
@@ -367,6 +368,8 @@
     "@tanstack/store": ["@tanstack/store@0.7.1", "", {}, "sha512-PjUQKXEXhLYj2X5/6c1Xn/0/qKY0IVFxTJweopRfF26xfjVyb14yALydJrHupDh3/d+1WKmfEgZPBVCmDkzzwg=="],
 
     "@tanstack/virtual-file-routes": ["@tanstack/virtual-file-routes@1.115.0", "", {}, "sha512-XLUh1Py3AftcERrxkxC5Y5m5mfllRH3YR6YVlyjFgI2Tc2Ssy2NKmQFQIafoxfW459UJ8Dn81nWKETEIJifE4g=="],
+
+    "@tanstack/zod-adapter": ["@tanstack/zod-adapter@1.129.5", "", { "peerDependencies": { "@tanstack/react-router": ">=1.43.2", "zod": "^3.23.8" } }, "sha512-3b+grjkszoygYgD6pEcsAR4zzSvxsffEMWkK82AQp01WpQpAUnL4kHaSnCN0vigs0LaakNXxuZ84AVxl3X7OLg=="],
 
     "@testing-library/dom": ["@testing-library/dom@10.4.0", "", { "dependencies": { "@babel/code-frame": "^7.10.4", "@babel/runtime": "^7.12.5", "@types/aria-query": "^5.0.1", "aria-query": "5.3.0", "chalk": "^4.1.0", "dom-accessibility-api": "^0.5.9", "lz-string": "^1.5.0", "pretty-format": "^27.0.2" } }, "sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ=="],
 

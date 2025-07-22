@@ -18,8 +18,13 @@ function RouteComponent() {
 			<LinkButton from={Route.fullPath} to="./$foo" params={{ foo: "bang" }}>
 				Bang Link
 			</LinkButton>
-      {/* @ts-expect-error */}
-			<LinkButton from={Route.fullPath} to="./$foo" params={{ foo: "invalid" }} variant="destructive">
+			{/* @ts-expect-error */}
+			<LinkButton
+				from={Route.fullPath}
+				to="./$foo"
+				params={{ foo: "invalid" }}
+				variant="destructive"
+			>
 				Invalid Link
 			</LinkButton>
 		</div>
