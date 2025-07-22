@@ -14,7 +14,7 @@ Repo for testing out different React tools
   - [x] Type-safe Custom Links
 - [ ] Tanstack Form; https://tanstack.com/form/latest
   - [ ] Integration w/ Tanstack Router for query parameter -> form init
-- [ ] Zod validations in depth; https://zod.dev/
+- [x] Zod validations in depth; https://zod.dev/
 - [ ] Tanstack Table full feature set; https://tanstack.com/table/latest
 - [ ] Tanstack Query advanced features; https://tanstack.com/query/latest
   - [ ] Infinite Queries
