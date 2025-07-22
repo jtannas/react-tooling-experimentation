@@ -35,7 +35,12 @@ import { Route as OrgsSlugStoresZustandImport } from './routes/orgs/$slug/stores
 import { Route as OrgsSlugStoresTanstackImport } from './routes/orgs/$slug/stores/tanstack'
 import { Route as OrgsSlugQueryParseImport } from './routes/orgs/$slug/query/parse'
 import { Route as OrgsSlugQueryInfiniteImport } from './routes/orgs/$slug/query/infinite'
+import { Route as OrgsSlugFormsZodValidationImport } from './routes/orgs/$slug/forms/zod-validation'
+import { Route as OrgsSlugFormsLinkedFieldsImport } from './routes/orgs/$slug/forms/linked-fields'
+import { Route as OrgsSlugFormsComponentLibraryImport } from './routes/orgs/$slug/forms/component-library'
 import { Route as OrgsSlugFormsBasicImport } from './routes/orgs/$slug/forms/basic'
+import { Route as OrgsSlugFormsAsyncValidationImport } from './routes/orgs/$slug/forms/async-validation'
+import { Route as OrgsSlugFormsAsyncInitImport } from './routes/orgs/$slug/forms/async-init'
 import { Route as OrgsSlugZodV4PathRouteImport } from './routes/orgs/$slug/zodV4/path/route'
 import { Route as OrgsSlugZodV4PathIndexImport } from './routes/orgs/$slug/zodV4/path/index'
 import { Route as OrgsSlugZodV4PathFooImport } from './routes/orgs/$slug/zodV4/path/$foo'
@@ -186,9 +191,43 @@ const OrgsSlugQueryInfiniteRoute = OrgsSlugQueryInfiniteImport.update({
   getParentRoute: () => OrgsSlugQueryRouteRoute,
 } as any)
 
+const OrgsSlugFormsZodValidationRoute = OrgsSlugFormsZodValidationImport.update(
+  {
+    id: '/zod-validation',
+    path: '/zod-validation',
+    getParentRoute: () => OrgsSlugFormsRouteRoute,
+  } as any,
+)
+
+const OrgsSlugFormsLinkedFieldsRoute = OrgsSlugFormsLinkedFieldsImport.update({
+  id: '/linked-fields',
+  path: '/linked-fields',
+  getParentRoute: () => OrgsSlugFormsRouteRoute,
+} as any)
+
+const OrgsSlugFormsComponentLibraryRoute =
+  OrgsSlugFormsComponentLibraryImport.update({
+    id: '/component-library',
+    path: '/component-library',
+    getParentRoute: () => OrgsSlugFormsRouteRoute,
+  } as any)
+
 const OrgsSlugFormsBasicRoute = OrgsSlugFormsBasicImport.update({
   id: '/basic',
   path: '/basic',
+  getParentRoute: () => OrgsSlugFormsRouteRoute,
+} as any)
+
+const OrgsSlugFormsAsyncValidationRoute =
+  OrgsSlugFormsAsyncValidationImport.update({
+    id: '/async-validation',
+    path: '/async-validation',
+    getParentRoute: () => OrgsSlugFormsRouteRoute,
+  } as any)
+
+const OrgsSlugFormsAsyncInitRoute = OrgsSlugFormsAsyncInitImport.update({
+  id: '/async-init',
+  path: '/async-init',
   getParentRoute: () => OrgsSlugFormsRouteRoute,
 } as any)
 
@@ -291,11 +330,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrgsSlugZodV4PathRouteImport
       parentRoute: typeof OrgsSlugZodV4RouteImport
     }
+    '/orgs/$slug/forms/async-init': {
+      id: '/orgs/$slug/forms/async-init'
+      path: '/async-init'
+      fullPath: '/orgs/$slug/forms/async-init'
+      preLoaderRoute: typeof OrgsSlugFormsAsyncInitImport
+      parentRoute: typeof OrgsSlugFormsRouteImport
+    }
+    '/orgs/$slug/forms/async-validation': {
+      id: '/orgs/$slug/forms/async-validation'
+      path: '/async-validation'
+      fullPath: '/orgs/$slug/forms/async-validation'
+      preLoaderRoute: typeof OrgsSlugFormsAsyncValidationImport
+      parentRoute: typeof OrgsSlugFormsRouteImport
+    }
     '/orgs/$slug/forms/basic': {
       id: '/orgs/$slug/forms/basic'
       path: '/basic'
       fullPath: '/orgs/$slug/forms/basic'
       preLoaderRoute: typeof OrgsSlugFormsBasicImport
+      parentRoute: typeof OrgsSlugFormsRouteImport
+    }
+    '/orgs/$slug/forms/component-library': {
+      id: '/orgs/$slug/forms/component-library'
+      path: '/component-library'
+      fullPath: '/orgs/$slug/forms/component-library'
+      preLoaderRoute: typeof OrgsSlugFormsComponentLibraryImport
+      parentRoute: typeof OrgsSlugFormsRouteImport
+    }
+    '/orgs/$slug/forms/linked-fields': {
+      id: '/orgs/$slug/forms/linked-fields'
+      path: '/linked-fields'
+      fullPath: '/orgs/$slug/forms/linked-fields'
+      preLoaderRoute: typeof OrgsSlugFormsLinkedFieldsImport
+      parentRoute: typeof OrgsSlugFormsRouteImport
+    }
+    '/orgs/$slug/forms/zod-validation': {
+      id: '/orgs/$slug/forms/zod-validation'
+      path: '/zod-validation'
+      fullPath: '/orgs/$slug/forms/zod-validation'
+      preLoaderRoute: typeof OrgsSlugFormsZodValidationImport
       parentRoute: typeof OrgsSlugFormsRouteImport
     }
     '/orgs/$slug/query/infinite': {
@@ -416,12 +490,22 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface OrgsSlugFormsRouteRouteChildren {
+  OrgsSlugFormsAsyncInitRoute: typeof OrgsSlugFormsAsyncInitRoute
+  OrgsSlugFormsAsyncValidationRoute: typeof OrgsSlugFormsAsyncValidationRoute
   OrgsSlugFormsBasicRoute: typeof OrgsSlugFormsBasicRoute
+  OrgsSlugFormsComponentLibraryRoute: typeof OrgsSlugFormsComponentLibraryRoute
+  OrgsSlugFormsLinkedFieldsRoute: typeof OrgsSlugFormsLinkedFieldsRoute
+  OrgsSlugFormsZodValidationRoute: typeof OrgsSlugFormsZodValidationRoute
   OrgsSlugFormsIndexRoute: typeof OrgsSlugFormsIndexRoute
 }
 
 const OrgsSlugFormsRouteRouteChildren: OrgsSlugFormsRouteRouteChildren = {
+  OrgsSlugFormsAsyncInitRoute: OrgsSlugFormsAsyncInitRoute,
+  OrgsSlugFormsAsyncValidationRoute: OrgsSlugFormsAsyncValidationRoute,
   OrgsSlugFormsBasicRoute: OrgsSlugFormsBasicRoute,
+  OrgsSlugFormsComponentLibraryRoute: OrgsSlugFormsComponentLibraryRoute,
+  OrgsSlugFormsLinkedFieldsRoute: OrgsSlugFormsLinkedFieldsRoute,
+  OrgsSlugFormsZodValidationRoute: OrgsSlugFormsZodValidationRoute,
   OrgsSlugFormsIndexRoute: OrgsSlugFormsIndexRoute,
 }
 
@@ -544,7 +628,12 @@ export interface FileRoutesByFullPath {
   '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
   '/orgs/$slug/': typeof OrgsSlugIndexRoute
   '/orgs/$slug/zodV4/path': typeof OrgsSlugZodV4PathRouteRouteWithChildren
+  '/orgs/$slug/forms/async-init': typeof OrgsSlugFormsAsyncInitRoute
+  '/orgs/$slug/forms/async-validation': typeof OrgsSlugFormsAsyncValidationRoute
   '/orgs/$slug/forms/basic': typeof OrgsSlugFormsBasicRoute
+  '/orgs/$slug/forms/component-library': typeof OrgsSlugFormsComponentLibraryRoute
+  '/orgs/$slug/forms/linked-fields': typeof OrgsSlugFormsLinkedFieldsRoute
+  '/orgs/$slug/forms/zod-validation': typeof OrgsSlugFormsZodValidationRoute
   '/orgs/$slug/query/infinite': typeof OrgsSlugQueryInfiniteRoute
   '/orgs/$slug/query/parse': typeof OrgsSlugQueryParseRoute
   '/orgs/$slug/stores/tanstack': typeof OrgsSlugStoresTanstackRoute
@@ -568,7 +657,12 @@ export interface FileRoutesByTo {
   '/orgs': typeof OrgsIndexRoute
   '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
   '/orgs/$slug': typeof OrgsSlugIndexRoute
+  '/orgs/$slug/forms/async-init': typeof OrgsSlugFormsAsyncInitRoute
+  '/orgs/$slug/forms/async-validation': typeof OrgsSlugFormsAsyncValidationRoute
   '/orgs/$slug/forms/basic': typeof OrgsSlugFormsBasicRoute
+  '/orgs/$slug/forms/component-library': typeof OrgsSlugFormsComponentLibraryRoute
+  '/orgs/$slug/forms/linked-fields': typeof OrgsSlugFormsLinkedFieldsRoute
+  '/orgs/$slug/forms/zod-validation': typeof OrgsSlugFormsZodValidationRoute
   '/orgs/$slug/query/infinite': typeof OrgsSlugQueryInfiniteRoute
   '/orgs/$slug/query/parse': typeof OrgsSlugQueryParseRoute
   '/orgs/$slug/stores/tanstack': typeof OrgsSlugStoresTanstackRoute
@@ -600,7 +694,12 @@ export interface FileRoutesById {
   '/orgs/$slug/landing': typeof OrgsSlugLandingRoute
   '/orgs/$slug/': typeof OrgsSlugIndexRoute
   '/orgs/$slug/zodV4/path': typeof OrgsSlugZodV4PathRouteRouteWithChildren
+  '/orgs/$slug/forms/async-init': typeof OrgsSlugFormsAsyncInitRoute
+  '/orgs/$slug/forms/async-validation': typeof OrgsSlugFormsAsyncValidationRoute
   '/orgs/$slug/forms/basic': typeof OrgsSlugFormsBasicRoute
+  '/orgs/$slug/forms/component-library': typeof OrgsSlugFormsComponentLibraryRoute
+  '/orgs/$slug/forms/linked-fields': typeof OrgsSlugFormsLinkedFieldsRoute
+  '/orgs/$slug/forms/zod-validation': typeof OrgsSlugFormsZodValidationRoute
   '/orgs/$slug/query/infinite': typeof OrgsSlugQueryInfiniteRoute
   '/orgs/$slug/query/parse': typeof OrgsSlugQueryParseRoute
   '/orgs/$slug/stores/tanstack': typeof OrgsSlugStoresTanstackRoute
@@ -633,7 +732,12 @@ export interface FileRouteTypes {
     | '/orgs/$slug/landing'
     | '/orgs/$slug/'
     | '/orgs/$slug/zodV4/path'
+    | '/orgs/$slug/forms/async-init'
+    | '/orgs/$slug/forms/async-validation'
     | '/orgs/$slug/forms/basic'
+    | '/orgs/$slug/forms/component-library'
+    | '/orgs/$slug/forms/linked-fields'
+    | '/orgs/$slug/forms/zod-validation'
     | '/orgs/$slug/query/infinite'
     | '/orgs/$slug/query/parse'
     | '/orgs/$slug/stores/tanstack'
@@ -656,7 +760,12 @@ export interface FileRouteTypes {
     | '/orgs'
     | '/orgs/$slug/landing'
     | '/orgs/$slug'
+    | '/orgs/$slug/forms/async-init'
+    | '/orgs/$slug/forms/async-validation'
     | '/orgs/$slug/forms/basic'
+    | '/orgs/$slug/forms/component-library'
+    | '/orgs/$slug/forms/linked-fields'
+    | '/orgs/$slug/forms/zod-validation'
     | '/orgs/$slug/query/infinite'
     | '/orgs/$slug/query/parse'
     | '/orgs/$slug/stores/tanstack'
@@ -686,7 +795,12 @@ export interface FileRouteTypes {
     | '/orgs/$slug/landing'
     | '/orgs/$slug/'
     | '/orgs/$slug/zodV4/path'
+    | '/orgs/$slug/forms/async-init'
+    | '/orgs/$slug/forms/async-validation'
     | '/orgs/$slug/forms/basic'
+    | '/orgs/$slug/forms/component-library'
+    | '/orgs/$slug/forms/linked-fields'
+    | '/orgs/$slug/forms/zod-validation'
     | '/orgs/$slug/query/infinite'
     | '/orgs/$slug/query/parse'
     | '/orgs/$slug/stores/tanstack'
@@ -755,7 +869,12 @@ export const routeTree = rootRoute
       "filePath": "orgs/$slug/forms/route.tsx",
       "parent": "/orgs/$slug",
       "children": [
+        "/orgs/$slug/forms/async-init",
+        "/orgs/$slug/forms/async-validation",
         "/orgs/$slug/forms/basic",
+        "/orgs/$slug/forms/component-library",
+        "/orgs/$slug/forms/linked-fields",
+        "/orgs/$slug/forms/zod-validation",
         "/orgs/$slug/forms/"
       ]
     },
@@ -813,8 +932,28 @@ export const routeTree = rootRoute
         "/orgs/$slug/zodV4/path/"
       ]
     },
+    "/orgs/$slug/forms/async-init": {
+      "filePath": "orgs/$slug/forms/async-init.tsx",
+      "parent": "/orgs/$slug/forms"
+    },
+    "/orgs/$slug/forms/async-validation": {
+      "filePath": "orgs/$slug/forms/async-validation.tsx",
+      "parent": "/orgs/$slug/forms"
+    },
     "/orgs/$slug/forms/basic": {
       "filePath": "orgs/$slug/forms/basic.tsx",
+      "parent": "/orgs/$slug/forms"
+    },
+    "/orgs/$slug/forms/component-library": {
+      "filePath": "orgs/$slug/forms/component-library.tsx",
+      "parent": "/orgs/$slug/forms"
+    },
+    "/orgs/$slug/forms/linked-fields": {
+      "filePath": "orgs/$slug/forms/linked-fields.tsx",
+      "parent": "/orgs/$slug/forms"
+    },
+    "/orgs/$slug/forms/zod-validation": {
+      "filePath": "orgs/$slug/forms/zod-validation.tsx",
       "parent": "/orgs/$slug/forms"
     },
     "/orgs/$slug/query/infinite": {

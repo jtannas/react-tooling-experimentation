@@ -149,3 +149,33 @@ Repo for testing out different React tools
 - In your component, use TQ's `useQuery` / `useSuspenseQuery` to access the data per usual.
 - TanstackRouter basically acts as a _coordinator_ for other state management tools.
   - It tells them when to run, but lets them handle their own business of what to do.
+
+# Tanstack Form Notes
+
+- Prioritizes scalability over brevity. The intent is to have a setup that is built from day 1 to handle complex use cases.
+- Has a similar API to a lot of other Tanstack tooling
+  - `useForm`
+  - `formOptions`
+  - `createFormHook` is used to inject your component library (e.g. `TextField`, `NumberField`, `SubmitButton`) directly into a custom `useAppForm` hook so that you're not manually specifying components.
+- Supports validation at multiple different stages, on fields & on the whole form, and through either custom or through common validation tools.
+- When not using components from `useAppForm`, you can still get a lot of the benefits by using `useForm` + `form.Field` + the "render props" pattern that injects data from the field into your custom UI
+
+## Fundamental Concepts
+
+- Summary Points from [the basic concepts guide](https://tanstack.com/form/latest/docs/framework/react/guides/basic-concepts)
+- A `form` represents an individual form and is the container for the relevant components
+- `form.Field` represents a single form input element
+- `field.state`: Each field has its own state (e.g. value, validation status, error messages, etc...)
+  - `field.state.meta` tracks what has happened to the field
+    - `isPristine`: The user has not changed the value
+    - `isTouched`: true after the user changes or blurs the field
+    - `isDirty`: true after the field has been changed, even if it was reverted. Opposite of `isPristine`
+    - `isDefaultValue`: true while the value is the same as the default
+- `useStore` can be used to subscribe to portions of a form state (e.g. `useStore(form.store, (state) => state.errorMap))`)
+- `field.listeners` can be used for callbacks that run when that field is changed (e.g. resetting the province/state when the country changed)
+- `field.mode="array"` can be used for managing an array of values on a field and comes with special methods for manipulating data
+  - `myField.pushValue`
+  - `myField.removeValue`
+  - `myField.swapValues`
+  - `myField.moveValue`
+- `form.reset()` can be used to set the form back to defaults. Caution: Be careful to prevent default html behavior from `<button type="reset">`
