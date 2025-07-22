@@ -6,10 +6,17 @@ import { Input } from "~/components/ui/input";
 const idToUser = z
 	.number()
 	.gte(1)
-	.transform(async (id) => {
+	.transform(async (id, ctx) => {
 		// fetch user from database
 		await new Promise((resolve) => setTimeout(resolve, 500));
-		return `User: ${id}`;
+		const user = id === 4 ? undefined : `User: ${id}`
+		if (!user)
+			ctx.issues.push({
+				code: "custom",
+				message: "User Not Found",
+				input: id,
+			});
+		return user;
 	});
 
 export const Route = createFileRoute("/orgs/$slug/zodV4/transform")({
@@ -22,7 +29,7 @@ export const Route = createFileRoute("/orgs/$slug/zodV4/transform")({
 
 function RouteComponent() {
 	const [num, setNum] = useState(0);
-	const [user, setUser] = useState<ZodSafeParseResult<string> | undefined>();
+	const [user, setUser] = useState<ZodSafeParseResult<string | undefined> | undefined>();
 
 	useEffect(() => {
 		const fetchUser = async () => {
