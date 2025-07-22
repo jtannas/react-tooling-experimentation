@@ -14,15 +14,17 @@ import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { useSidebar } from "~/components/ui/sidebar";
 
+function hasLinkTitle<T extends ReturnType<typeof useMatches>[number]>(
+	route: T,
+): route is T & { options: { staticData: { linkTitle: string } } } {
+	return !!route.staticData.linkTitle;
+}
+
 export function SiteHeader() {
 	const pathname = useLocation({ select: (loc) => loc.pathname });
 	const { toggleSidebar } = useSidebar();
 	const matches = useMatches();
 	if (matches.some((match) => match.status === "pending")) return null;
-
-	const matchesWithCrumbs = matches.filter(
-		(match) => !['(Root)', '(Inherit)'].includes(match.staticData.linkTitle)
-	);
 
 	return (
 		<header className="bg-background sticky top-0 z-50 flex w-full items-center border-b">
@@ -45,7 +47,7 @@ export function SiteHeader() {
 								afterCreateOrganizationUrl="/orgs/:slug/landing"
 							/>
 						</BreadcrumbItem>
-						{matchesWithCrumbs.map((match) => (
+						{matches.filter(hasLinkTitle).map((match) => (
 							<>
 								<BreadcrumbSeparator />
 								<BreadcrumbItem key={match.pathname}>

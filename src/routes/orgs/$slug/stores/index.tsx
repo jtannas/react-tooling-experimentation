@@ -3,5 +3,5 @@ import { ChildrenIndex } from "~/components/children-index";
 
 export const Route = createFileRoute("/orgs/$slug/stores/")({
 	component: ChildrenIndex,
-	staticData: { linkTitle: "(Inherit)" },
+	staticData: { linkTitle: null }, // inherits from `route.tsx`
 });

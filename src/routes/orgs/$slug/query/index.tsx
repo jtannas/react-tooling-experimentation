@@ -3,5 +3,5 @@ import { ChildrenIndex } from "~/components/children-index";
 
 export const Route = createFileRoute("/orgs/$slug/query/")({
 	component: ChildrenIndex,
-	staticData: { linkTitle: "Tanstack Query" },
+	staticData: { linkTitle: null }, // inherit from `route.tsx`
 });

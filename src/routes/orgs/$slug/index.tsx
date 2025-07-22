@@ -4,7 +4,7 @@ import { useAppOrg } from "~/integrations/clerk/useAppOrg";
 
 export const Route = createFileRoute("/orgs/$slug/")({
 	component: RouteComponent,
-	staticData: { linkTitle: "(Inherit)" },
+	staticData: { linkTitle: null }, // inherits from `route.tsx`
 });
 
 function RouteComponent() {

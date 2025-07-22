@@ -28,6 +28,12 @@ import {
 	SidebarMenuItem,
 } from "~/components/ui/sidebar";
 
+function hasLinkTitle(
+	route: AnyRoute,
+): route is AnyRoute & { options: { staticData: { linkTitle: string } } } {
+	return !!route.options.staticData.linkTitle;
+}
+
 function routeFinder({
 	flatRoutes,
 	regex,
@@ -36,11 +42,12 @@ function routeFinder({
 	regex: RegExp;
 }) {
 	return flatRoutes
-		.filter((r) => regex.test(r.fullPath) && r.options.staticData.linkTitle)
+		.filter(hasLinkTitle)
+		.filter((r) => regex.test(r.fullPath))
 		.sort(
 			(a, b) =>
-				a.options.staticData.linkTitle?.localeCompare(
-					b.options.staticData.linkTitle ?? "",
+				a.options.staticData.linkTitle.localeCompare(
+					b.options.staticData.linkTitle,
 				) ?? 0,
 		);
 }

@@ -22,7 +22,7 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	staticData: { linkTitle: "(Root)" },
+	staticData: { linkTitle: null }, // inaccessible route for users
 	component: () => (
 		<ClerkProvider>
 			<ClerkLoading>
