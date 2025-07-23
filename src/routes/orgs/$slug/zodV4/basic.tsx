@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { z } from "zod/v4";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -23,10 +23,7 @@ export type Player = z.infer<typeof Player>;
 function RouteComponent() {
 	const [username, setUsername] = useState("John Doe");
 	const [xp, setXp] = useState(0);
-	const player = useMemo(
-		() => Player.safeParse({ username, xp }),
-		[username, xp],
-	);
+	const player = Player.safeParse({ username, xp });
 
 	return (
 		<div>
