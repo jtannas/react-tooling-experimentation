@@ -10,6 +10,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { LoaderCircle } from "lucide-react";
+import { Geiger } from "react-geiger";
 import { AppSidebar } from "~/components/app-sidebar";
 import { SiteHeader } from "~/components/site-header";
 import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
@@ -24,25 +25,27 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	staticData: { linkTitle: null }, // inaccessible route for users
 	component: () => (
-		<ClerkProvider>
-			<ClerkLoading>
-				<div className="w-screen h-screen flex items-center justify-center">
-					<LoaderCircle />
-				</div>
-			</ClerkLoading>
+		<Geiger>
+			<ClerkProvider>
+				<ClerkLoading>
+					<div className="w-screen h-screen flex items-center justify-center">
+						<LoaderCircle />
+					</div>
+				</ClerkLoading>
 
-			<ClerkLoaded>
-				<SignedOut>
-					<RedirectToSignIn />
-				</SignedOut>
-				<SignedIn>
-					<SignedInComponent />
-				</SignedIn>
-			</ClerkLoaded>
+				<ClerkLoaded>
+					<SignedOut>
+						<RedirectToSignIn />
+					</SignedOut>
+					<SignedIn>
+						<SignedInComponent />
+					</SignedIn>
+				</ClerkLoaded>
 
-			<TanStackRouterDevtools position="top-right" />
-			<TanStackQueryLayout />
-		</ClerkProvider>
+				<TanStackRouterDevtools position="top-right" />
+				<TanStackQueryLayout />
+			</ClerkProvider>
+		</Geiger>
 	),
 });
 
